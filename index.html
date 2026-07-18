@@ -38,53 +38,57 @@
     unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
   }
   :root {
-    --bg: #eef1f7;
+    --bg: #ffffff;
     --card: #ffffff;
-    --ink: #0c111c;
-    --muted: #5a6473;
-    --muted-2: #97a0af;
-    --line: #e3e8f0;
-    --line-2: #eef1f7;
-    --accent: #0d9488;
-    --accent-2: #06b6d4;
-    --grad: linear-gradient(135deg, #10b8a6, #22d3ee);
-    --glow: rgba(13,148,136,.28);
-    --ring: rgba(13,148,136,.20);
-    --accent-soft: #e0f5f1;
-    --good: #0f9d76;
-    --good-soft: #e3f6ef;
+    --fill: #f3f4f7;
+    --ink: #14161c;
+    --muted: #868b98;
+    --muted-2: #aab0bc;
+    --line: #edeff3;
+    --line-2: #f3f4f7;
+    --accent: #2f6bed;
+    --accent-2: #2f6bed;
+    --accent-deep: #1f52c8;
+    --grad: linear-gradient(180deg, #3f79f2, #2f6bed);
+    --glow: rgba(47,107,237,.26);
+    --ring: rgba(47,107,237,.18);
+    --accent-soft: #e9effe;
+    --good: #17a866;
+    --good-soft: #e4f6ee;
     --warn: #c2410c;
     --warn-soft: #fdeee4;
-    --red: #e11d48;
-    --red-soft: #fde7ec;
-    --bar-bg: rgba(255,255,255,.72);
-    --hi: rgba(255,255,255,.65);
-    --shadow: 0 1px 2px rgba(15,23,42,.04), 0 10px 26px rgba(15,23,42,.08), 0 30px 60px rgba(15,23,42,.05);
+    --red: #e5484d;
+    --red-soft: #fdebec;
+    --bar-bg: rgba(255,255,255,.86);
+    --hi: rgba(255,255,255,.6);
+    --shadow: 0 1px 2px rgba(18,20,26,.04), 0 6px 18px rgba(18,20,26,.06);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #080c14;
-      --card: #111a28;
-      --ink: #e9f0f8;
-      --muted: #93a1b6;
-      --muted-2: #5c6a7f;
-      --line: rgba(255,255,255,.09);
+      --bg: #0f1115;
+      --card: #191c22;
+      --fill: #202329;
+      --ink: #f4f6f9;
+      --muted: #8b909b;
+      --muted-2: #626775;
+      --line: rgba(255,255,255,.08);
       --line-2: rgba(255,255,255,.05);
-      --accent: #2dd4bf;
-      --accent-2: #22d3ee;
-      --grad: linear-gradient(135deg, #2dd4bf, #22d3ee);
-      --glow: rgba(45,212,191,.35);
-      --ring: rgba(45,212,191,.28);
-      --accent-soft: rgba(45,212,191,.12);
-      --good: #34d399;
-      --good-soft: rgba(52,211,153,.13);
+      --accent: #5c8dff;
+      --accent-2: #5c8dff;
+      --accent-deep: #3f74f0;
+      --grad: linear-gradient(180deg, #6f9bff, #5c8dff);
+      --glow: rgba(92,141,255,.3);
+      --ring: rgba(92,141,255,.28);
+      --accent-soft: rgba(92,141,255,.14);
+      --good: #35c98e;
+      --good-soft: rgba(53,201,142,.14);
       --warn: #fb9a5a;
       --warn-soft: rgba(251,146,60,.14);
-      --red: #fb7185;
-      --red-soft: rgba(251,113,133,.14);
-      --bar-bg: rgba(12,18,30,.68);
-      --hi: rgba(255,255,255,.06);
-      --shadow: 0 1px 2px rgba(0,0,0,.45), 0 14px 34px rgba(0,0,0,.5), 0 32px 64px rgba(0,0,0,.4);
+      --red: #ff6b6b;
+      --red-soft: rgba(255,107,107,.14);
+      --bar-bg: rgba(15,17,21,.8);
+      --hi: rgba(255,255,255,.05);
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 22px rgba(0,0,0,.4);
     }
   }
   * { box-sizing: border-box; }
@@ -92,10 +96,6 @@
   body {
     margin: 0;
     background-color: var(--bg);
-    background-image:
-      radial-gradient(900px 520px at 100% -8%, var(--accent-soft), transparent 55%),
-      radial-gradient(820px 480px at -10% 0%, rgba(34,211,238,.08), transparent 55%);
-    background-attachment: fixed;
     color: var(--ink);
     font: 15px/1.55 "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     letter-spacing: -.011em;
@@ -139,7 +139,7 @@
   }
   .stat .k { color: var(--muted); font-size: 12px; font-weight: 600; margin-bottom: 7px; }
   .stat .v { font-size: 22px; font-weight: 800; letter-spacing: -.03em; }
-  .stat.accent .v { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .stat.accent .v { color: var(--accent); }
   .stat.good .v { color: var(--good); }
   .stat.warn .v { color: var(--warn); }
   .stat.red .v { color: var(--red); }
@@ -152,10 +152,11 @@
   }
   input, button, textarea { font: inherit; }
   input {
-    background: var(--bg); border: 1px solid var(--line); color: var(--ink);
-    border-radius: 12px; padding: 10px 13px; outline: none; transition: .15s;
+    background: var(--fill); border: 1.5px solid transparent; color: var(--ink);
+    border-radius: 13px; padding: 11px 14px; outline: none; transition: .15s;
   }
-  input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--ring); }
+  input::placeholder { color: var(--muted-2); }
+  input:focus { border-color: var(--accent); background: var(--card); box-shadow: 0 0 0 3px var(--ring); }
   input[type="date"] { color-scheme: light dark; }
   .add input.grow { flex: 1 1 180px; }
   .add input.money { width: 130px; }
@@ -163,24 +164,16 @@
   .btn {
     border: 1px solid var(--line); background: var(--card); color: var(--ink);
     border-radius: 13px; padding: 10px 15px; cursor: pointer; transition: .14s; font-weight: 600;
-    box-shadow: 0 1px 2px rgba(4,12,24,.06), inset 0 1px 0 var(--hi);
   }
-  .btn:hover { border-color: var(--muted-2); }
+  .btn:hover { background: var(--fill); }
   .btn:active { transform: translateY(1px); }
   .btn.primary {
-    border: none; color: #062a23; font-weight: 700; letter-spacing: -.01em;
-    background: linear-gradient(180deg, var(--accent-2), var(--accent));
-    box-shadow:
-      inset 0 1px 0 rgba(255,255,255,.55),
-      inset 0 -3px 8px rgba(3,20,15,.18),
-      0 8px 18px var(--glow),
-      0 2px 5px rgba(4,12,24,.18);
+    border: none; color: #fff; font-weight: 700; letter-spacing: -.01em;
+    background: var(--accent);
+    box-shadow: 0 4px 14px var(--glow);
   }
-  .btn.primary:hover { filter: brightness(1.04); }
-  .btn.primary:active {
-    transform: translateY(1px);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.4), inset 0 -1px 4px rgba(3,20,15,.2), 0 4px 10px var(--glow);
-  }
+  .btn.primary:hover { background: var(--accent-deep); }
+  .btn.primary:active { transform: translateY(1px); box-shadow: 0 2px 8px var(--glow); }
   .btn.ghost { border-color: transparent; background: transparent; color: var(--muted); padding: 6px 8px; }
   .btn.ghost:hover { color: var(--ink); background: var(--line-2); }
   .btn.tiny { padding: 4px 8px; font-size: 12px; }
@@ -192,6 +185,14 @@
   .client { background: var(--card); border: 1px solid var(--line); border-radius: 20px; margin-bottom: 14px; box-shadow: var(--shadow), inset 0 1px 0 var(--hi); overflow: hidden; }
   .client.paused { opacity: .62; }
   .chead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 18px; }
+  .chead-main { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 auto; }
+  .cinfo { min-width: 0; }
+  .ava {
+    width: 44px; height: 44px; border-radius: 50%; flex: 0 0 auto;
+    display: grid; place-items: center; font-weight: 700; font-size: 18px; color: #fff;
+    background: hsl(var(--h,220) 58% 52%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 2px 6px rgba(0,0,0,.14);
+  }
   .cname { font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
   .tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; letter-spacing: .01em; }
   .tag.paused { background: var(--line-2); color: var(--muted); }
@@ -309,28 +310,17 @@
       box-shadow: 0 -6px 24px rgba(0,0,0,.10);
     }
     .tab {
-      position: relative; flex: 1; flex-direction: column; gap: 5px; padding: 3px 2px;
-      border-radius: 14px; font-size: 10.5px; font-weight: 700; color: var(--muted);
+      position: relative; flex: 1; flex-direction: column; gap: 5px; padding: 4px 2px;
+      border-radius: 14px; font-size: 10.5px; font-weight: 600; color: var(--muted);
       transition: color .16s;
     }
-    .tab .ti {
-      display: grid; place-items: center; width: 48px; height: 40px; border-radius: 13px;
-      transition: transform .18s, background .18s, box-shadow .18s;
-    }
-    .tab .ti svg { width: 23px; height: 23px; }
+    .tab .ti { display: grid; place-items: center; height: 28px; }
+    .tab .ti svg { width: 25px; height: 25px; }
     .tab .tl { display: block; }
     .tab .pill { display: none; }
     .tab.active { color: var(--accent); }
-    .tab.active .ti {
-      color: #fff; transform: translateY(-2px);
-      background: linear-gradient(180deg, var(--accent-2), var(--accent));
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.5),
-        inset 0 -3px 7px rgba(3,20,15,.22),
-        0 7px 15px var(--glow),
-        0 1px 3px rgba(4,12,24,.28);
-    }
-    .tab.active .ti svg { stroke-width: 1.9; filter: drop-shadow(0 1px 1px rgba(0,0,0,.25)); }
+    .tab.active .ti { color: var(--accent); }
+    .tab.active .ti svg { stroke-width: 2.1; }
   }
 </style>
 </head>
@@ -577,15 +567,18 @@ function clientHTML(c) {
   return `
   <div class="client ${c.open ? "open" : ""} ${c.paused ? "paused" : ""}">
     <div class="chead">
-      <div>
-        <div class="cname">
-          ${escapeHtml(c.name)}
-          ${c.paused ? `<span class="tag paused">на паузе</span>` : ""}
+      <div class="chead-main">
+        ${avatarHTML(c.name)}
+        <div class="cinfo">
+          <div class="cname">
+            ${escapeHtml(c.name)}
+            ${c.paused ? `<span class="tag paused">на паузе</span>` : ""}
+          </div>
+          <div class="cmeta">
+            ${c.monthly > 0 ? `<b class="num">${fmt(c.monthly)}</b> в месяц · ` : ""}${cost > 0 ? `себест. <b class="num">${fmt(cost)}</b> · ` : ""}получено в этом месяце <b class="num">${fmt(got)}</b>
+          </div>
+          ${c.note ? `<div class="cnote">${escapeHtml(c.note)}</div>` : ""}
         </div>
-        <div class="cmeta">
-          ${c.monthly > 0 ? `<b class="num">${fmt(c.monthly)}</b> в месяц · ` : ""}${cost > 0 ? `себест. <b class="num">${fmt(cost)}</b> · ` : ""}получено в этом месяце <b class="num">${fmt(got)}</b>
-        </div>
-        ${c.note ? `<div class="cnote">${escapeHtml(c.note)}</div>` : ""}
       </div>
       <div class="cactions">
         <button class="btn ghost tiny" data-act="toggle" data-c="${c.id}">${c.open ? "Свернуть" : "Платежи"}</button>
@@ -668,11 +661,14 @@ function incomeHTML(inc) {
   return `
   <div class="client">
     <div class="chead">
-      <div style="flex:1 1 auto; min-width:0;">
-        <input class="inc-name" value="${escapeHtml(inc.name)}" data-i="${inc.id}" data-f="name" placeholder="Имя клиента">
-        <div class="inc-fields">
-          <label>взято <input class="num" type="number" min="0" step="1" value="${inc.taken || 0}" data-i="${inc.id}" data-f="taken"></label>
-          <label>всего <input class="num" type="number" min="0" step="1" value="${inc.total || 0}" data-i="${inc.id}" data-f="total"></label>
+      <div class="chead-main" style="flex:1 1 auto; min-width:0;">
+        ${avatarHTML(inc.name)}
+        <div style="flex:1; min-width:0;">
+          <input class="inc-name" value="${escapeHtml(inc.name)}" data-i="${inc.id}" data-f="name" placeholder="Имя клиента">
+          <div class="inc-fields">
+            <label>взято <input class="num" type="number" min="0" step="1" value="${inc.taken || 0}" data-i="${inc.id}" data-f="taken"></label>
+            <label>всего <input class="num" type="number" min="0" step="1" value="${inc.total || 0}" data-i="${inc.id}" data-f="total"></label>
+          </div>
         </div>
       </div>
       <div class="cactions">
@@ -719,13 +715,16 @@ function staffHTML(m) {
   return `
   <div class="client ${m.open ? "open" : ""}">
     <div class="chead">
-      <div>
-        <div class="cname">
-          ${escapeHtml(m.name)}
-          ${m.role ? `<span class="tag paused">${escapeHtml(m.role)}</span>` : ""}
+      <div class="chead-main">
+        ${avatarHTML(m.name)}
+        <div class="cinfo">
+          <div class="cname">
+            ${escapeHtml(m.name)}
+            ${m.role ? `<span class="tag paused">${escapeHtml(m.role)}</span>` : ""}
+          </div>
+          <div class="cmeta">выплачено в этом месяце <b class="num">${fmt(got)}</b></div>
+          ${m.note ? `<div class="cnote">${escapeHtml(m.note)}</div>` : ""}
         </div>
-        <div class="cmeta">выплачено в этом месяце <b class="num">${fmt(got)}</b></div>
-        ${m.note ? `<div class="cnote">${escapeHtml(m.note)}</div>` : ""}
       </div>
       <div class="cactions">
         <button class="btn ghost tiny" data-act="toggle" data-m="${m.id}">${m.open ? "Свернуть" : "Выплаты"}</button>
@@ -753,6 +752,15 @@ function staffHTML(m) {
 
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+}
+
+// Круглый аватар с инициалом — цвет из имени (в духе списка Trust Wallet).
+function avatarHTML(name) {
+  const s = String(name || "");
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  const letter = (s.trim()[0] || "?").toUpperCase();
+  return `<span class="ava" style="--h:${h % 360}">${escapeHtml(letter)}</span>`;
 }
 
 /* ---------- tabs ---------- */
