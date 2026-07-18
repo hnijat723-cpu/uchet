@@ -1,94 +1,83 @@
 <!doctype html>
-<html lang="ru">
+<html lang="az">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Учёт — клиенты и расходы</title>
+<title>Uçot — müştərilər və xərclər</title>
 
 <!-- PWA: устанавливается на главный экран, работает офлайн -->
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#eef1f7" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#080c14" media="(prefers-color-scheme: dark)">
-<!-- iPhone (Safari «На экран Домой») -->
+<meta name="theme-color" content="#f5f5fb" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#111225" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
-<meta name="apple-mobile-web-app-title" content="Учёт">
+<meta name="apple-mobile-web-app-title" content="Uçot">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="icon" href="icon-192.png" type="image/png">
 
 <style>
   @font-face {
-    font-family: "Montserrat"; font-style: normal; font-weight: 400 800; font-display: swap;
-    src: url("fonts/montserrat-cyrillic.woff2") format("woff2");
-    unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-  }
-  @font-face {
-    font-family: "Montserrat"; font-style: normal; font-weight: 400 800; font-display: swap;
-    src: url("fonts/montserrat-cyrillic-ext.woff2") format("woff2");
-    unicode-range: U+0460-052F, U+1C80-1C8A, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-  }
-  @font-face {
-    font-family: "Montserrat"; font-style: normal; font-weight: 400 800; font-display: swap;
-    src: url("fonts/montserrat-latin.woff2") format("woff2");
+    font-family: "Inter"; font-style: normal; font-weight: 400 800; font-display: swap;
+    src: url("fonts/inter-latin.woff2") format("woff2");
     unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
   }
   @font-face {
-    font-family: "Montserrat"; font-style: normal; font-weight: 400 800; font-display: swap;
-    src: url("fonts/montserrat-latin-ext.woff2") format("woff2");
+    font-family: "Inter"; font-style: normal; font-weight: 400 800; font-display: swap;
+    src: url("fonts/inter-latin-ext.woff2") format("woff2");
     unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
   }
   :root {
-    --bg: #ffffff;
+    --bg: #f5f5fb;
     --card: #ffffff;
-    --fill: #f3f4f7;
-    --ink: #14161c;
-    --muted: #868b98;
-    --muted-2: #aab0bc;
-    --line: #edeff3;
-    --line-2: #f3f4f7;
-    --accent: #2f6bed;
-    --accent-2: #2f6bed;
-    --accent-deep: #1f52c8;
-    --grad: linear-gradient(180deg, #3f79f2, #2f6bed);
-    --glow: rgba(47,107,237,.26);
-    --ring: rgba(47,107,237,.18);
-    --accent-soft: #e9effe;
+    --fill: #f0f0f8;
+    --ink: #1b1c30;
+    --muted: #83879e;
+    --muted-2: #adb1c6;
+    --line: #ececf4;
+    --line-2: #f2f2f9;
+    --accent: #5b57eb;
+    --accent-2: #8a7cf7;
+    --accent-deep: #4a45d6;
+    --grad: linear-gradient(135deg, #7b78f6, #5654e8);
+    --glow: rgba(91,87,235,.26);
+    --ring: rgba(91,87,235,.20);
+    --accent-soft: #ecebfd;
     --good: #17a866;
     --good-soft: #e4f6ee;
-    --warn: #c2410c;
-    --warn-soft: #fdeee4;
-    --red: #e5484d;
+    --warn: #d97706;
+    --warn-soft: #fdf1e2;
+    --red: #f0424a;
     --red-soft: #fdebec;
     --bar-bg: rgba(255,255,255,.86);
     --hi: rgba(255,255,255,.6);
-    --shadow: 0 1px 2px rgba(18,20,26,.04), 0 6px 18px rgba(18,20,26,.06);
+    --shadow: 0 1px 2px rgba(30,27,75,.04), 0 8px 24px rgba(30,27,75,.07);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0f1115;
-      --card: #191c22;
-      --fill: #202329;
-      --ink: #f4f6f9;
-      --muted: #8b909b;
-      --muted-2: #626775;
+      --bg: #111225;
+      --card: #1b1d36;
+      --fill: #242745;
+      --ink: #eceefb;
+      --muted: #9a9fc4;
+      --muted-2: #6b7099;
       --line: rgba(255,255,255,.08);
       --line-2: rgba(255,255,255,.05);
-      --accent: #5c8dff;
-      --accent-2: #5c8dff;
-      --accent-deep: #3f74f0;
-      --grad: linear-gradient(180deg, #6f9bff, #5c8dff);
-      --glow: rgba(92,141,255,.3);
-      --ring: rgba(92,141,255,.28);
-      --accent-soft: rgba(92,141,255,.14);
+      --accent: #8b8bff;
+      --accent-2: #a99cff;
+      --accent-deep: #6f6ff5;
+      --grad: linear-gradient(135deg, #8f86ff, #6a63f0);
+      --glow: rgba(139,139,255,.32);
+      --ring: rgba(139,139,255,.30);
+      --accent-soft: rgba(139,139,255,.16);
       --good: #35c98e;
       --good-soft: rgba(53,201,142,.14);
-      --warn: #fb9a5a;
+      --warn: #fbbf6a;
       --warn-soft: rgba(251,146,60,.14);
-      --red: #ff6b6b;
-      --red-soft: rgba(255,107,107,.14);
-      --bar-bg: rgba(15,17,21,.8);
+      --red: #ff6b74;
+      --red-soft: rgba(255,107,116,.14);
+      --bar-bg: rgba(17,18,37,.8);
       --hi: rgba(255,255,255,.05);
-      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 8px 22px rgba(0,0,0,.4);
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 26px rgba(0,0,0,.45);
     }
   }
   * { box-sizing: border-box; }
@@ -97,8 +86,8 @@
     margin: 0;
     background-color: var(--bg);
     color: var(--ink);
-    font: 15px/1.55 "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    letter-spacing: -.011em;
+    font: 15px/1.55 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: -.006em;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
@@ -110,7 +99,7 @@
   .brand { display: flex; align-items: center; gap: 13px; }
   .logo {
     width: 48px; height: 48px; border-radius: 15px; flex: 0 0 auto; display: block;
-    box-shadow: 0 8px 20px rgba(4,12,24,.28), inset 0 1px 0 rgba(255,255,255,.15);
+    box-shadow: 0 8px 20px rgba(20,18,50,.28), inset 0 1px 0 rgba(255,255,255,.15);
   }
   h1 { font-size: 23px; font-weight: 800; margin: 0; letter-spacing: -.03em; color: var(--ink); }
   .top .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
@@ -139,7 +128,13 @@
   }
   .stat .k { color: var(--muted); font-size: 12px; font-weight: 600; margin-bottom: 7px; }
   .stat .v { font-size: 22px; font-weight: 800; letter-spacing: -.03em; }
-  .stat.accent .v { color: var(--accent); }
+  /* Акцентная карточка — фиолетовый «герой», как в референсе */
+  .stat.accent {
+    background: var(--grad); border: none; color: #fff;
+    box-shadow: 0 12px 26px var(--glow);
+  }
+  .stat.accent .k { color: rgba(255,255,255,.82); }
+  .stat.accent .v { color: #fff; }
   .stat.good .v { color: var(--good); }
   .stat.warn .v { color: var(--warn); }
   .stat.red .v { color: var(--red); }
@@ -178,7 +173,7 @@
   .btn.ghost:hover { color: var(--ink); background: var(--line-2); }
   .btn.tiny { padding: 4px 8px; font-size: 12px; }
   .btn.danger:hover { border-color: var(--red); color: var(--red); }
-  /* Взведённое удаление (две нажатия) — работает без системного окна, важно для iPhone */
+  /* Удаление в два нажатия — работает без системного окна (важно для iPhone) */
   .btn.armed { background: var(--red); border-color: var(--red); color: #fff; }
 
   /* client card */
@@ -190,10 +185,10 @@
   .ava {
     width: 44px; height: 44px; border-radius: 50%; flex: 0 0 auto;
     display: grid; place-items: center; font-weight: 700; font-size: 18px; color: #fff;
-    background: hsl(var(--h,220) 58% 52%);
+    background: hsl(var(--h,220) 58% 55%);
     box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 2px 6px rgba(0,0,0,.14);
   }
-  .cname { font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .cname { font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
   .tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; letter-spacing: .01em; }
   .tag.paused { background: var(--line-2); color: var(--muted); }
   .cmeta { color: var(--muted); font-size: 13px; margin-top: 3px; }
@@ -243,18 +238,18 @@
 
   /* приходы: инлайн-редактирование (без всплывающих окон) */
   .inc-name {
-    font-size: 16px; font-weight: 600; width: 100%; max-width: 280px;
+    font-size: 16px; font-weight: 700; width: 100%; max-width: 280px;
     background: transparent; border: 1px solid transparent; color: var(--ink);
     border-radius: 8px; padding: 4px 6px;
   }
-  .inc-name:focus { border-color: var(--accent); background: var(--bg); }
+  .inc-name:focus { border-color: var(--accent); background: var(--fill); }
   .inc-fields { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; padding-left: 6px; }
   .inc-fields label { font-size: 12.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
   .inc-fields input { width: 108px; }
 
   .empty {
     text-align: center; color: var(--muted); padding: 48px 20px;
-    border: 1px dashed var(--line); border-radius: 16px; background: var(--card);
+    border: 1px dashed var(--line); border-radius: 18px; background: var(--card);
   }
 
   .tools { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 30px; color: var(--muted); }
@@ -269,7 +264,7 @@
                calc(90px + env(safe-area-inset-bottom));
     }
 
-    /* Сводка — свайпаемая лента карточек (как в приложениях iOS) */
+    /* Сводка — свайпаемая лента карточек */
     .summary, .summary.cols3 {
       display: flex; grid-template-columns: none;
       gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
@@ -278,7 +273,7 @@
     .summary::-webkit-scrollbar { display: none; }
     .stat { flex: 0 0 44%; scroll-snap-align: start; }
 
-    /* Формы — поля на всю ширину, крупные под палец */
+    /* Формы — поля на всю ширину */
     .add { gap: 8px; padding: 12px; }
     .add input, .add .grow, .add .money { flex: 1 1 100%; width: 100%; }
     .add .btn.primary { width: 100%; }
@@ -291,14 +286,14 @@
     .inc-fields input { width: 100%; }
     .inc-name { max-width: 100%; font-size: 17px; }
 
-    /* Действия в карточке — заметные кнопки-пилюли, а не мелкий текст */
+    /* Действия — кнопки-пилюли */
     .chead { flex-direction: column; }
     .cactions { order: 3; flex-wrap: wrap; gap: 8px; width: 100%; }
     .cactions .btn { border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; font-size: 13px; color: var(--ink); }
     .cactions .btn.danger { color: var(--red); }
     .cactions .btn.armed { color: #fff; }
 
-    /* Нижняя навигация — стеклянная, как таббар в приложении */
+    /* Нижняя навигация */
     .tabs {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
       display: flex; gap: 0; margin: 0; border-radius: 0;
@@ -331,81 +326,81 @@
     <div class="brand">
       <img class="logo" src="icon-192.png" alt="" width="48" height="48">
       <div>
-        <h1>Учёт</h1>
-        <div class="sub">клиенты и личные расходы · <span id="today"></span></div>
+        <h1>Uçot</h1>
+        <div class="sub">müştərilər və şəxsi xərclər · <span id="today"></span></div>
       </div>
     </div>
   </div>
 
   <div class="tabs" id="tabs">
-    <button class="tab active" data-tab="clients"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.1"/><path d="M2.8 19.2a6.2 6.2 0 0 1 12.4 0"/><path d="M16.5 5.3a3 3 0 0 1 0 5.6"/><path d="M17.7 19.2a6.2 6.2 0 0 0-2.4-4.9"/></svg></span><span class="tl">Клиенты</span> <span class="pill">доход</span></button>
-    <button class="tab" data-tab="income"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.7v8.6"/><path d="M8.6 12.9 12 16.3l3.4-3.4"/></svg></span><span class="tl">Приходы</span> <span class="pill">разовые</span></button>
-    <button class="tab" data-tab="staff"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12.5" rx="2.4"/><path d="M8.3 7.5V6.2a2.2 2.2 0 0 1 2.2-2.2h3a2.2 2.2 0 0 1 2.2 2.2v1.3"/><path d="M3 12.4h18"/></svg></span><span class="tl">Сотрудники</span> <span class="pill">−</span></button>
-    <button class="tab" data-tab="expenses"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.6h12v16.8l-2.2-1.4-2.3 1.4-2.3-1.4-2.2 1.4L6 20.4z"/><path d="M9 8h6M9 11.6h6M9 15.2h4"/></svg></span><span class="tl">Расходы</span> <span class="pill">−</span></button>
+    <button class="tab active" data-tab="clients"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.1"/><path d="M2.8 19.2a6.2 6.2 0 0 1 12.4 0"/><path d="M16.5 5.3a3 3 0 0 1 0 5.6"/><path d="M17.7 19.2a6.2 6.2 0 0 0-2.4-4.9"/></svg></span><span class="tl">Müştərilər</span> <span class="pill">gəlir</span></button>
+    <button class="tab" data-tab="income"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.7v8.6"/><path d="M8.6 12.9 12 16.3l3.4-3.4"/></svg></span><span class="tl">Daxilolma</span> <span class="pill">birdəfəlik</span></button>
+    <button class="tab" data-tab="staff"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12.5" rx="2.4"/><path d="M8.3 7.5V6.2a2.2 2.2 0 0 1 2.2-2.2h3a2.2 2.2 0 0 1 2.2 2.2v1.3"/><path d="M3 12.4h18"/></svg></span><span class="tl">İşçilər</span> <span class="pill">−</span></button>
+    <button class="tab" data-tab="expenses"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.6h12v16.8l-2.2-1.4-2.3 1.4-2.3-1.4-2.2 1.4L6 20.4z"/><path d="M9 8h6M9 11.6h6M9 15.2h4"/></svg></span><span class="tl">Xərclər</span> <span class="pill">−</span></button>
   </div>
 
-  <!-- ===== КЛИЕНТЫ ===== -->
+  <!-- ===== MÜŞTƏRİLƏR ===== -->
   <section id="view-clients">
     <div class="summary cols3" id="summary"></div>
 
     <form class="add" id="addForm" autocomplete="off">
-      <input class="grow" id="cName" placeholder="Имя клиента / компания" required>
-      <input class="money num" id="cMonthly" type="number" min="0" step="1" placeholder="в месяц, ₼">
-      <input class="money num" id="cCost" type="number" min="0" step="1" placeholder="себест., ₼">
-      <input class="grow" id="cNoteIn" placeholder="заметка (необязательно)" style="flex-basis:140px">
-      <button class="btn primary" type="submit">Добавить клиента</button>
+      <input class="grow" id="cName" placeholder="Müştəri / şirkət adı" required>
+      <input class="money num" id="cMonthly" type="number" min="0" step="1" placeholder="aylıq, ₼">
+      <input class="money num" id="cCost" type="number" min="0" step="1" placeholder="maya, ₼">
+      <input class="grow" id="cNoteIn" placeholder="qeyd (istəyə görə)" style="flex-basis:140px">
+      <button class="btn primary" type="submit">Müştəri əlavə et</button>
     </form>
 
     <div id="list"></div>
   </section>
 
-  <!-- ===== ПРИХОДЫ (разовые/хаотичные) ===== -->
+  <!-- ===== DAXİLOLMA (birdəfəlik) ===== -->
   <section id="view-income" hidden>
     <div class="summary cols3" id="incomeSummary"></div>
 
     <form class="add" id="incomeForm" autocomplete="off">
-      <input class="grow" id="iName" placeholder="Имя клиента" required>
-      <input class="money num" id="iTotal" type="number" min="0" step="1" placeholder="всего, ₼" required>
-      <input class="money num" id="iTaken" type="number" min="0" step="1" placeholder="уже взяли, ₼">
-      <button class="btn primary" type="submit">Добавить приход</button>
+      <input class="grow" id="iName" placeholder="Müştəri adı" required>
+      <input class="money num" id="iTotal" type="number" min="0" step="1" placeholder="cəmi, ₼" required>
+      <input class="money num" id="iTaken" type="number" min="0" step="1" placeholder="alınıb, ₼">
+      <button class="btn primary" type="submit">Daxilolma əlavə et</button>
     </form>
 
     <div id="incomeList"></div>
   </section>
 
-  <!-- ===== СОТРУДНИКИ ===== -->
+  <!-- ===== İŞÇİLƏR ===== -->
   <section id="view-staff" hidden>
     <div class="summary cols3" id="staffSummary"></div>
 
     <form class="add" id="staffForm" autocomplete="off">
-      <input class="grow" id="sName" placeholder="Имя сотрудника" required>
-      <input class="grow" id="sRole" placeholder="Роль (фотограф, видео, моушн…)" style="flex-basis:190px">
-      <input class="grow" id="sNote" placeholder="заметка" style="flex-basis:130px">
-      <button class="btn primary" type="submit">Добавить сотрудника</button>
+      <input class="grow" id="sName" placeholder="İşçi adı" required>
+      <input class="grow" id="sRole" placeholder="Vəzifə (fotoqraf, video, motion…)" style="flex-basis:190px">
+      <input class="grow" id="sNote" placeholder="qeyd" style="flex-basis:130px">
+      <button class="btn primary" type="submit">İşçi əlavə et</button>
     </form>
 
     <div id="staffList"></div>
   </section>
 
-  <!-- ===== РАСХОДЫ ===== -->
+  <!-- ===== XƏRCLƏR ===== -->
   <section id="view-expenses" hidden>
     <div class="summary" id="expSummary"></div>
 
     <form class="add" id="expForm" autocomplete="off">
-      <input class="grow" id="eTitle" placeholder="Куда / на что" required>
-      <input class="money num" id="eAmount" type="number" min="0" step="1" placeholder="сумма, ₼" required>
+      <input class="grow" id="eTitle" placeholder="Haraya / nəyə" required>
+      <input class="money num" id="eAmount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
       <input id="eDate" type="date" required>
-      <input class="grow" id="eNote" placeholder="комментарий" style="flex-basis:140px">
-      <button class="btn primary" type="submit">Записать расход</button>
+      <input class="grow" id="eNote" placeholder="şərh" style="flex-basis:140px">
+      <button class="btn primary" type="submit">Xərci yaz</button>
     </form>
 
     <div id="expList"></div>
   </section>
 
   <div class="tools">
-    <div class="hint">Данные хранятся только в этом браузере. Делайте бэкап регулярно.</div>
-    <button class="btn tiny" id="exportBtn">↓ Экспорт (бэкап)</button>
-    <button class="btn tiny" id="importBtn">↑ Импорт</button>
+    <div class="hint">Məlumatlar yalnız bu brauzerdə saxlanılır. Mütəmadi ehtiyat nüsxə saxlayın.</div>
+    <button class="btn tiny" id="exportBtn">↓ İxrac (ehtiyat)</button>
+    <button class="btn tiny" id="importBtn">↑ İdxal</button>
     <input type="file" id="importFile" accept="application/json" hidden>
   </div>
 
@@ -416,6 +411,7 @@
 
 const KEY = "clients-tracker/v1";
 const $ = (s, r=document) => r.querySelector(s);
+const LOC = "az-AZ";
 
 /* ---------- state ---------- */
 let state = load();
@@ -426,9 +422,9 @@ function load() {
     if (raw) {
       const s = JSON.parse(raw);
       if (!Array.isArray(s.clients)) s.clients = [];
-      if (!Array.isArray(s.expenses)) s.expenses = []; // добавлено в v1.1
-      if (!Array.isArray(s.staff)) s.staff = [];       // добавлено в v1.2
-      if (!Array.isArray(s.incomes)) s.incomes = [];   // добавлено в v1.3
+      if (!Array.isArray(s.expenses)) s.expenses = [];
+      if (!Array.isArray(s.staff)) s.staff = [];
+      if (!Array.isArray(s.incomes)) s.incomes = [];
       return s;
     }
   } catch (e) {}
@@ -440,7 +436,14 @@ function save() {
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
 /* ---------- helpers ---------- */
-const fmt = n => (Math.round(n) || 0).toLocaleString("ru-RU") + " ₼";
+// Азербайджанские месяцы — хардкодом, чтобы не зависеть от ICU браузера/устройства.
+const AZ_MONTHS = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avqust","sentyabr","oktyabr","noyabr","dekabr"];
+const AZ_MONTHS_SHORT = ["yan","fev","mar","apr","may","iyn","iyl","avq","sen","okt","noy","dek"];
+
+// Числа: разделитель тысяч — неразрывный пробел (1 800 ₼), одинаково везде.
+const groupNum = n => (String(Math.round(Math.abs(n)) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+const fmt = n => groupNum(n) + " ₼";
+
 const todayISO = () => new Date().toISOString().slice(0, 10);
 const monthKey = iso => (iso || "").slice(0, 7);
 const nowMonth = () => todayISO().slice(0, 7);
@@ -448,12 +451,16 @@ const nowMonth = () => todayISO().slice(0, 7);
 function fmtDate(iso) {
   const d = new Date(iso + "T00:00:00");
   if (isNaN(d)) return iso;
-  return d.toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
+  return `${d.getDate()} ${AZ_MONTHS_SHORT[d.getMonth()]} ${d.getFullYear()}`;
 }
 function fmtMonthTitle(mk) {
   const d = new Date(mk + "-01T00:00:00");
   if (isNaN(d)) return mk;
-  return d.toLocaleDateString("ru-RU", { month: "long", year: "numeric" });
+  return `${AZ_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+}
+function fmtToday() {
+  const d = new Date();
+  return `${d.getDate()} ${AZ_MONTHS[d.getMonth()]} ${d.getFullYear()}`;
 }
 
 function paidThisMonth(c) {
@@ -479,7 +486,7 @@ const incomeLeftAll = () => state.incomes.reduce((s, i) => s + incomeLeft(i), 0)
 
 /* ---------- render ---------- */
 function render() {
-  $("#today").textContent = new Date().toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+  $("#today").textContent = fmtToday();
   renderClientSummary();
   renderList();
   renderIncomeSummary();
@@ -499,18 +506,18 @@ function renderClientSummary() {
   const active = state.clients.filter(c => !c.paused);
   const expected = active.reduce((s, c) => s + (c.monthly || 0), 0);
   const cost = active.reduce((s, c) => s + (c.cost || 0), 0);
-  const profit = expected - cost;                         // доход − себестоимость
+  const profit = expected - cost;
   const got = active.reduce((s, c) => s + paidThisMonth(c), 0);
   const remain = active.reduce((s, c) => s + monthRemaining(c), 0);
-  const cnt = state.clients.length + (state.clients.some(c => c.paused) ? ` · ${active.length} активных` : "");
+  const cnt = state.clients.length + (state.clients.some(c => c.paused) ? ` · ${active.length} aktiv` : "");
 
   $("#summary").innerHTML =
-    statCard("Ожидается в месяц", fmt(expected), "accent") +
-    statCard("Себестоимость в месяц", fmt(cost), "warn") +
-    statCard("Чистая прибыль в месяц", (profit < 0 ? "−" : "") + fmt(Math.abs(profit)), profit < 0 ? "red" : "good") +
-    statCard("Получено в этом месяце", fmt(got), "good") +
-    statCard("Остаток за месяц", fmt(remain), remain > 0 ? "warn" : "good") +
-    statCard("Клиентов", cnt);
+    statCard("Aylıq gözlənilən", fmt(expected), "accent") +
+    statCard("Aylıq maya", fmt(cost), "warn") +
+    statCard("Aylıq xalis mənfəət", (profit < 0 ? "−" : "") + fmt(Math.abs(profit)), profit < 0 ? "red" : "good") +
+    statCard("Bu ay alınan", fmt(got), "good") +
+    statCard("Ay üzrə qalıq", fmt(remain), remain > 0 ? "warn" : "good") +
+    statCard("Müştərilər", cnt);
 }
 
 function renderExpSummary() {
@@ -518,20 +525,20 @@ function renderExpSummary() {
   const spent = spentThisMonth();
   const balance = got - spent;
   $("#expSummary").innerHTML =
-    statCard("Потрачено в этом месяце", fmt(spent), "red") +
-    statCard("Получено в этом месяце", fmt(got), "good") +
-    statCard("Баланс месяца", (balance < 0 ? "−" : "") + fmt(Math.abs(balance)), balance < 0 ? "red" : "good") +
-    statCard("Потрачено всего", fmt(spentTotal()));
+    statCard("Bu ay xərclənən", fmt(spent), "red") +
+    statCard("Bu ay alınan", fmt(got), "good") +
+    statCard("Ay balansı", (balance < 0 ? "−" : "") + fmt(Math.abs(balance)), balance < 0 ? "red" : "good") +
+    statCard("Cəmi xərclənən", fmt(spentTotal()));
 }
 
 function renderList() {
   const list = $("#list");
   if (state.clients.length === 0) {
-    list.innerHTML = `<div class="empty">Пока нет клиентов.<br>Добавьте первого в форме выше.</div>`;
+    list.innerHTML = `<div class="empty">Hələ müştəri yoxdur.<br>Yuxarıdakı formada əlavə edin.</div>`;
     return;
   }
   const sorted = [...state.clients].sort((a, b) =>
-    (a.paused === b.paused) ? a.name.localeCompare(b.name, "ru") : (a.paused ? 1 : -1)
+    (a.paused === b.paused) ? a.name.localeCompare(b.name, "az") : (a.paused ? 1 : -1)
   );
   list.innerHTML = sorted.map(clientHTML).join("");
 }
@@ -541,17 +548,17 @@ function clientHTML(c) {
   const rem = monthRemaining(c);
   const total = totalPaid(c);
   const cost = c.cost || 0;
-  const profit = (c.monthly || 0) - cost;                 // прибыль с клиента в месяц
+  const profit = (c.monthly || 0) - cost;
   const monthPaid = c.monthly > 0 && rem === 0 && got > 0;
 
   const monthBadge = c.monthly > 0
     ? (monthPaid
-        ? `<span class="badge good"><span class="bl">этот месяц</span><b>оплачен</b></span>`
-        : `<span class="badge warn"><span class="bl">остаток за месяц</span><b class="num">${fmt(rem)}</b></span>`)
+        ? `<span class="badge good"><span class="bl">bu ay</span><b>ödənilib</b></span>`
+        : `<span class="badge warn"><span class="bl">ay üzrə qalıq</span><b class="num">${fmt(rem)}</b></span>`)
     : "";
 
   const profitBadge = (c.monthly || cost)
-    ? `<span class="badge ${profit < 0 ? "red" : "good"}"><span class="bl">прибыль/мес</span><b class="num">${(profit < 0 ? "−" : "") + fmt(Math.abs(profit))}</b></span>`
+    ? `<span class="badge ${profit < 0 ? "red" : "good"}"><span class="bl">mənfəət/ay</span><b class="num">${(profit < 0 ? "−" : "") + fmt(Math.abs(profit))}</b></span>`
     : "";
 
   const pays = c.payments.slice().sort((a, b) => b.date.localeCompare(a.date));
@@ -560,9 +567,9 @@ function clientHTML(c) {
         <td class="dt num">${fmtDate(p.date)}</td>
         <td class="pn">${p.note ? escapeHtml(p.note) : ""}</td>
         <td class="amt num">${fmt(p.amount)}</td>
-        <td class="del"><button class="btn ghost tiny" data-act="delpay" data-c="${c.id}" data-p="${p.id}" title="Удалить платёж">✕</button></td>
+        <td class="del"><button class="btn ghost tiny" data-act="delpay" data-c="${c.id}" data-p="${p.id}" title="Ödənişi sil">✕</button></td>
       </tr>`).join("")
-    : `<tr><td colspan="4" class="empty-pays">Платежей ещё не было.</td></tr>`;
+    : `<tr><td colspan="4" class="empty-pays">Hələ ödəniş olmayıb.</td></tr>`;
 
   return `
   <div class="client ${c.open ? "open" : ""} ${c.paused ? "paused" : ""}">
@@ -572,35 +579,35 @@ function clientHTML(c) {
         <div class="cinfo">
           <div class="cname">
             ${escapeHtml(c.name)}
-            ${c.paused ? `<span class="tag paused">на паузе</span>` : ""}
+            ${c.paused ? `<span class="tag paused">pauzada</span>` : ""}
           </div>
           <div class="cmeta">
-            ${c.monthly > 0 ? `<b class="num">${fmt(c.monthly)}</b> в месяц · ` : ""}${cost > 0 ? `себест. <b class="num">${fmt(cost)}</b> · ` : ""}получено в этом месяце <b class="num">${fmt(got)}</b>
+            ${c.monthly > 0 ? `<b class="num">${fmt(c.monthly)}</b> aylıq · ` : ""}${cost > 0 ? `maya <b class="num">${fmt(cost)}</b> · ` : ""}bu ay alınan <b class="num">${fmt(got)}</b>
           </div>
           ${c.note ? `<div class="cnote">${escapeHtml(c.note)}</div>` : ""}
         </div>
       </div>
       <div class="cactions">
-        <button class="btn ghost tiny" data-act="toggle" data-c="${c.id}">${c.open ? "Свернуть" : "Платежи"}</button>
-        <button class="btn ghost tiny" data-act="edit" data-c="${c.id}">Изменить</button>
-        <button class="btn ghost tiny" data-act="pause" data-c="${c.id}">${c.paused ? "Возобновить" : "Пауза"}</button>
-        <button class="btn ghost tiny danger" data-act="delclient" data-c="${c.id}">Удалить</button>
+        <button class="btn ghost tiny" data-act="toggle" data-c="${c.id}">${c.open ? "Bağla" : "Ödənişlər"}</button>
+        <button class="btn ghost tiny" data-act="edit" data-c="${c.id}">Düzəliş</button>
+        <button class="btn ghost tiny" data-act="pause" data-c="${c.id}">${c.paused ? "Davam et" : "Pauza"}</button>
+        <button class="btn ghost tiny danger" data-act="delclient" data-c="${c.id}">Sil</button>
       </div>
     </div>
 
     <div class="cbadges">
       ${monthBadge}
       ${profitBadge}
-      <span class="badge flat"><span class="bl">всего оплачено</span><b class="num">${fmt(total)}</b></span>
-      <span class="badge flat"><span class="bl">платежей</span><b class="num">${c.payments.length}</b></span>
+      <span class="badge flat"><span class="bl">cəmi ödənilib</span><b class="num">${fmt(total)}</b></span>
+      <span class="badge flat"><span class="bl">ödəniş</span><b class="num">${c.payments.length}</b></span>
     </div>
 
     <div class="cbody">
       <form class="payadd" data-act="addpay" data-c="${c.id}">
-        <input class="money num" name="amount" type="number" min="0" step="1" placeholder="сумма, ₼" required>
+        <input class="money num" name="amount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
         <input type="date" name="date" value="${todayISO()}" required>
-        <input class="pnote" name="note" placeholder="комментарий (необязательно)">
-        <button class="btn primary tiny" type="submit">Записать платёж</button>
+        <input class="pnote" name="note" placeholder="şərh (istəyə görə)">
+        <button class="btn primary tiny" type="submit">Ödənişi yaz</button>
       </form>
       <table class="pays"><tbody>${paysRows}</tbody></table>
     </div>
@@ -610,10 +617,9 @@ function clientHTML(c) {
 function renderExpList() {
   const list = $("#expList");
   if (state.expenses.length === 0) {
-    list.innerHTML = `<div class="empty">Расходов пока нет.<br>Запишите первый в форме выше.</div>`;
+    list.innerHTML = `<div class="empty">Hələ xərc yoxdur.<br>Yuxarıdakı formada yazın.</div>`;
     return;
   }
-  // Группируем по месяцам, свежие сверху.
   const byMonth = {};
   for (const e of state.expenses) {
     const mk = monthKey(e.date) || "—";
@@ -628,7 +634,7 @@ function renderExpList() {
         <td class="dt num">${fmtDate(e.date)}</td>
         <td class="ti">${escapeHtml(e.title)}${e.note ? `<div class="en">${escapeHtml(e.note)}</div>` : ""}</td>
         <td class="amt num">−${fmt(e.amount)}</td>
-        <td class="del"><button class="btn ghost tiny" data-act="delexp" data-e="${e.id}" title="Удалить расход">✕</button></td>
+        <td class="del"><button class="btn ghost tiny" data-act="delexp" data-e="${e.id}" title="Xərci sil">✕</button></td>
       </tr>`).join("");
     return `<div class="exp-card" style="margin-bottom:14px">
       <div class="exp-group-h"><span>${fmtMonthTitle(mk)}</span><span class="sum num">${fmt(sum)}</span></div>
@@ -637,19 +643,19 @@ function renderExpList() {
   }).join("");
 }
 
-/* ---------- приходы: рендер ---------- */
+/* ---------- daxilolma: рендер ---------- */
 function renderIncomeSummary() {
   const left = incomeLeftAll();
   $("#incomeSummary").innerHTML =
-    statCard("Должны взять", fmt(incomeTotalAll()), "accent") +
-    statCard("Уже взяли", fmt(incomeTakenAll()), "good") +
-    statCard("Осталось получить", fmt(left), left > 0 ? "warn" : "good");
+    statCard("Alınmalı", fmt(incomeTotalAll()), "accent") +
+    statCard("Alınıb", fmt(incomeTakenAll()), "good") +
+    statCard("Qalıq", fmt(left), left > 0 ? "warn" : "good");
 }
 
 function renderIncomeList() {
   const list = $("#incomeList");
   if (state.incomes.length === 0) {
-    list.innerHTML = `<div class="empty">Разовых приходов пока нет.<br>Добавьте первый в форме выше.</div>`;
+    list.innerHTML = `<div class="empty">Hələ birdəfəlik daxilolma yoxdur.<br>Yuxarıdakı formada əlavə edin.</div>`;
     return;
   }
   list.innerHTML = state.incomes.map(incomeHTML).join("");
@@ -664,38 +670,38 @@ function incomeHTML(inc) {
       <div class="chead-main" style="flex:1 1 auto; min-width:0;">
         ${avatarHTML(inc.name)}
         <div style="flex:1; min-width:0;">
-          <input class="inc-name" value="${escapeHtml(inc.name)}" data-i="${inc.id}" data-f="name" placeholder="Имя клиента">
+          <input class="inc-name" value="${escapeHtml(inc.name)}" data-i="${inc.id}" data-f="name" placeholder="Müştəri adı">
           <div class="inc-fields">
-            <label>взято <input class="num" type="number" min="0" step="1" value="${inc.taken || 0}" data-i="${inc.id}" data-f="taken"></label>
-            <label>всего <input class="num" type="number" min="0" step="1" value="${inc.total || 0}" data-i="${inc.id}" data-f="total"></label>
+            <label>alınıb <input class="num" type="number" min="0" step="1" value="${inc.taken || 0}" data-i="${inc.id}" data-f="taken"></label>
+            <label>cəmi <input class="num" type="number" min="0" step="1" value="${inc.total || 0}" data-i="${inc.id}" data-f="total"></label>
           </div>
         </div>
       </div>
       <div class="cactions">
-        <button class="btn ghost tiny danger" data-act="delincome" data-i="${inc.id}">Удалить</button>
+        <button class="btn ghost tiny danger" data-act="delincome" data-i="${inc.id}">Sil</button>
       </div>
     </div>
     <div class="cbadges">
-      <span class="badge ${done ? "good" : "warn"}"><span class="bl">${done ? "статус" : "осталось"}</span><b class="inc-left num">${done ? "закрыто" : fmt(rem)}</b></span>
+      <span class="badge ${done ? "good" : "warn"}"><span class="bl">${done ? "status" : "qalıq"}</span><b class="inc-left num">${done ? "bağlandı" : fmt(rem)}</b></span>
     </div>
   </div>`;
 }
 
-/* ---------- сотрудники: рендер ---------- */
+/* ---------- işçilər: рендер ---------- */
 function renderStaffSummary() {
   $("#staffSummary").innerHTML =
-    statCard("Выплачено в этом месяце", fmt(staffMonthAll()), "red") +
-    statCard("Всего выплачено", fmt(staffAll())) +
-    statCard("Сотрудников", state.staff.length);
+    statCard("Bu ay ödənilən", fmt(staffMonthAll()), "red") +
+    statCard("Cəmi ödənilən", fmt(staffAll())) +
+    statCard("İşçilər", state.staff.length);
 }
 
 function renderStaffList() {
   const list = $("#staffList");
   if (state.staff.length === 0) {
-    list.innerHTML = `<div class="empty">Сотрудников пока нет.<br>Добавьте первого в форме выше.</div>`;
+    list.innerHTML = `<div class="empty">Hələ işçi yoxdur.<br>Yuxarıdakı formada əlavə edin.</div>`;
     return;
   }
-  const sorted = [...state.staff].sort((a, b) => a.name.localeCompare(b.name, "ru"));
+  const sorted = [...state.staff].sort((a, b) => a.name.localeCompare(b.name, "az"));
   list.innerHTML = sorted.map(staffHTML).join("");
 }
 
@@ -708,9 +714,9 @@ function staffHTML(m) {
         <td class="dt num">${fmtDate(p.date)}</td>
         <td class="pn">${p.note ? escapeHtml(p.note) : ""}</td>
         <td class="amt num">−${fmt(p.amount)}</td>
-        <td class="del"><button class="btn ghost tiny" data-act="delpay" data-m="${m.id}" data-p="${p.id}" title="Удалить выплату">✕</button></td>
+        <td class="del"><button class="btn ghost tiny" data-act="delpay" data-m="${m.id}" data-p="${p.id}" title="Ödənişi sil">✕</button></td>
       </tr>`).join("")
-    : `<tr><td colspan="4" class="empty-pays">Выплат ещё не было.</td></tr>`;
+    : `<tr><td colspan="4" class="empty-pays">Hələ ödəniş olmayıb.</td></tr>`;
 
   return `
   <div class="client ${m.open ? "open" : ""}">
@@ -722,28 +728,28 @@ function staffHTML(m) {
             ${escapeHtml(m.name)}
             ${m.role ? `<span class="tag paused">${escapeHtml(m.role)}</span>` : ""}
           </div>
-          <div class="cmeta">выплачено в этом месяце <b class="num">${fmt(got)}</b></div>
+          <div class="cmeta">bu ay ödənilən <b class="num">${fmt(got)}</b></div>
           ${m.note ? `<div class="cnote">${escapeHtml(m.note)}</div>` : ""}
         </div>
       </div>
       <div class="cactions">
-        <button class="btn ghost tiny" data-act="toggle" data-m="${m.id}">${m.open ? "Свернуть" : "Выплаты"}</button>
-        <button class="btn ghost tiny" data-act="edit" data-m="${m.id}">Изменить</button>
-        <button class="btn ghost tiny danger" data-act="delstaff" data-m="${m.id}">Удалить</button>
+        <button class="btn ghost tiny" data-act="toggle" data-m="${m.id}">${m.open ? "Bağla" : "Ödənişlər"}</button>
+        <button class="btn ghost tiny" data-act="edit" data-m="${m.id}">Düzəliş</button>
+        <button class="btn ghost tiny danger" data-act="delstaff" data-m="${m.id}">Sil</button>
       </div>
     </div>
 
     <div class="cbadges">
-      <span class="badge flat"><span class="bl">всего выплачено</span><b class="num">${fmt(total)}</b></span>
-      <span class="badge flat"><span class="bl">выплат</span><b class="num">${m.payments.length}</b></span>
+      <span class="badge flat"><span class="bl">cəmi ödənilən</span><b class="num">${fmt(total)}</b></span>
+      <span class="badge flat"><span class="bl">ödəniş</span><b class="num">${m.payments.length}</b></span>
     </div>
 
     <div class="cbody">
       <form class="payadd" data-act="addpay" data-m="${m.id}">
-        <input class="money num" name="amount" type="number" min="0" step="1" placeholder="сумма, ₼" required>
+        <input class="money num" name="amount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
         <input type="date" name="date" value="${todayISO()}" required>
-        <input class="pnote" name="note" placeholder="за что (необязательно)">
-        <button class="btn primary tiny" type="submit">Записать выплату</button>
+        <input class="pnote" name="note" placeholder="nəyə görə (istəyə görə)">
+        <button class="btn primary tiny" type="submit">Ödənişi yaz</button>
       </form>
       <table class="pays"><tbody>${paysRows}</tbody></table>
     </div>
@@ -754,7 +760,7 @@ function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
 }
 
-// Круглый аватар с инициалом — цвет из имени (в духе списка Trust Wallet).
+// Круглый аватар с инициалом — цвет из имени.
 function avatarHTML(name) {
   const s = String(name || "");
   let h = 0;
@@ -775,23 +781,23 @@ $("#tabs").addEventListener("click", e => {
   $("#view-expenses").hidden = tab !== "expenses";
 });
 
-/* ---------- удаление в два нажатия (без системного окна — важно для iPhone) ---------- */
+/* ---------- удаление в два нажатия (без системного окна) ---------- */
 function armedDelete(btn, onConfirm) {
   if (btn.dataset.armed === "1") { onConfirm(); return; }
   btn.dataset.armed = "1";
   btn.dataset.orig = btn.textContent;
-  btn.textContent = "Точно?";
+  btn.textContent = "Əminsən?";
   btn.classList.add("armed");
   setTimeout(() => {
     if (btn.isConnected && btn.dataset.armed === "1") {
       btn.dataset.armed = "";
-      btn.textContent = btn.dataset.orig || "Удалить";
+      btn.textContent = btn.dataset.orig || "Sil";
       btn.classList.remove("armed");
     }
   }, 3000);
 }
 
-/* ---------- clients: actions ---------- */
+/* ---------- müştərilər: actions ---------- */
 function getClient(id) { return state.clients.find(c => c.id === id); }
 
 $("#addForm").addEventListener("submit", e => {
@@ -844,13 +850,13 @@ $("#list").addEventListener("submit", e => {
 });
 
 function editClient(c) {
-  const name = prompt("Имя клиента / компания:", c.name);
+  const name = prompt("Müştəri / şirkət adı:", c.name);
   if (name === null) return;
-  const monthly = prompt("Ежемесячная оплата, ₼ (0 — если нет):", c.monthly || 0);
+  const monthly = prompt("Aylıq ödəniş, ₼ (yoxdursa 0):", c.monthly || 0);
   if (monthly === null) return;
-  const cost = prompt("Себестоимость в месяц, ₼ (0 — если нет):", c.cost || 0);
+  const cost = prompt("Aylıq maya, ₼ (yoxdursa 0):", c.cost || 0);
   if (cost === null) return;
-  const note = prompt("Заметка:", c.note || "");
+  const note = prompt("Qeyd:", c.note || "");
   if (note === null) return;
   c.name = name.trim() || c.name;
   c.monthly = Math.max(0, Number(monthly) || 0);
@@ -859,7 +865,7 @@ function editClient(c) {
   render();
 }
 
-/* ---------- expenses: actions ---------- */
+/* ---------- xərclər: actions ---------- */
 $("#eDate").value = todayISO();
 
 $("#expForm").addEventListener("submit", e => {
@@ -871,7 +877,7 @@ $("#expForm").addEventListener("submit", e => {
   const note = $("#eNote").value.trim();
   state.expenses.push({ id: uid(), title, amount, date, note });
   $("#eTitle").value = ""; $("#eAmount").value = ""; $("#eNote").value = "";
-  $("#eDate").value = date; // дату оставляем — удобно вносить несколько за день
+  $("#eDate").value = date;
   render();
 });
 
@@ -882,7 +888,7 @@ $("#expList").addEventListener("click", e => {
   render();
 });
 
-/* ---------- сотрудники: actions ---------- */
+/* ---------- işçilər: actions ---------- */
 function getStaff(id) { return state.staff.find(m => m.id === id); }
 
 $("#staffForm").addEventListener("submit", e => {
@@ -933,11 +939,11 @@ $("#staffList").addEventListener("submit", e => {
 });
 
 function editStaff(m) {
-  const name = prompt("Имя сотрудника:", m.name);
+  const name = prompt("İşçi adı:", m.name);
   if (name === null) return;
-  const role = prompt("Роль:", m.role || "");
+  const role = prompt("Vəzifə:", m.role || "");
   if (role === null) return;
-  const note = prompt("Заметка:", m.note || "");
+  const note = prompt("Qeyd:", m.note || "");
   if (note === null) return;
   m.name = name.trim() || m.name;
   m.role = role.trim();
@@ -945,7 +951,7 @@ function editStaff(m) {
   render();
 }
 
-/* ---------- приходы: actions ---------- */
+/* ---------- daxilolma: actions ---------- */
 $("#incomeForm").addEventListener("submit", e => {
   e.preventDefault();
   const name = $("#iName").value.trim();
@@ -957,8 +963,7 @@ $("#incomeForm").addEventListener("submit", e => {
   render();
 });
 
-// Инлайн-правки: имя/взято/всего меняются прямо в карточке, без всплывающих окон.
-// Полный перерендер не зовём, чтобы не терять фокус — обновляем только «осталось» и сводку.
+// Инлайн-правки: имя/alınıb/cəmi меняются прямо в карточке, без всплывающих окон.
 $("#incomeList").addEventListener("input", e => {
   const el = e.target;
   const id = el.dataset.i, f = el.dataset.f;
@@ -972,8 +977,8 @@ $("#incomeList").addEventListener("input", e => {
   if (badge) {
     const rem = incomeLeft(inc);
     const done = (inc.total || 0) > 0 && rem === 0;
-    badge.textContent = done ? "закрыто" : fmt(rem);
-    badge.previousElementSibling.textContent = done ? "статус" : "осталось";
+    badge.textContent = done ? "bağlandı" : fmt(rem);
+    badge.previousElementSibling.textContent = done ? "status" : "qalıq";
     badge.closest(".badge").className = "badge " + (done ? "good" : "warn");
   }
   renderIncomeSummary();
@@ -994,7 +999,7 @@ $("#exportBtn").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
   const a = document.createElement("a");
   a.href = URL.createObjectURL(blob);
-  a.download = `учёт-${todayISO()}.json`;
+  a.download = `ucot-${todayISO()}.json`;
   a.click();
   URL.revokeObjectURL(a.href);
 });
@@ -1006,15 +1011,15 @@ $("#importFile").addEventListener("change", e => {
   reader.onload = () => {
     try {
       const data = JSON.parse(reader.result);
-      if (!data || !Array.isArray(data.clients)) throw new Error("формат");
+      if (!data || !Array.isArray(data.clients)) throw new Error("format");
       if (!Array.isArray(data.expenses)) data.expenses = [];
       if (!Array.isArray(data.staff)) data.staff = [];
       if (!Array.isArray(data.incomes)) data.incomes = [];
-      if (!confirm("Заменить текущие данные содержимым файла?")) return;
+      if (!confirm("Cari məlumatlar faylla əvəz olunsun?")) return;
       state = data;
       render();
     } catch (err) {
-      alert("Не удалось прочитать файл: это не похоже на бэкап.");
+      alert("Fayl oxunmadı: bu, ehtiyat nüsxəyə oxşamır.");
     }
   };
   reader.readAsText(file);
