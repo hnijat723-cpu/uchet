@@ -2,7 +2,7 @@
 // Стратегия: страницу (навигацию) берём из сети, если есть — так видны обновления;
 // офлайн и для иконок отдаём из кэша. Данные тут ни при чём — они в localStorage.
 // Обновил файлы на хостинге — подними версию кэша, старый удалится сам.
-const CACHE = "uchet-v6";
+const CACHE = "uchet-v7";
 const ASSETS = [
   "./",
   "./index.html",
@@ -10,6 +10,10 @@ const ASSETS = [
   "./icon-192.png",
   "./icon-512.png",
   "./apple-touch-icon.png",
+  "./fonts/montserrat-latin.woff2",
+  "./fonts/montserrat-latin-ext.woff2",
+  "./fonts/montserrat-cyrillic.woff2",
+  "./fonts/montserrat-cyrillic-ext.woff2",
 ];
 
 self.addEventListener("install", (e) => {
