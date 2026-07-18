@@ -1,0 +1,600 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Учёт — клиенты и расходы</title>
+
+<!-- PWA: устанавливается на главный экран, работает офлайн -->
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e0f12" media="(prefers-color-scheme: dark)">
+<!-- iPhone (Safari «На экран Домой») -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Учёт">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" href="icon-192.png" type="image/png">
+
+<style>
+  :root {
+    --bg: #f6f7f9;
+    --card: #ffffff;
+    --ink: #14161a;
+    --muted: #6b7280;
+    --muted-2: #9aa1ac;
+    --line: #e6e8ec;
+    --line-2: #eef0f3;
+    --accent: #2f6bff;
+    --accent-soft: #eaf0ff;
+    --good: #17936a;
+    --good-soft: #e6f5ef;
+    --warn: #c2410c;
+    --warn-soft: #fdeee4;
+    --red: #dc2626;
+    --red-soft: #fdecec;
+    --shadow: 0 1px 2px rgba(16,18,22,.04), 0 8px 24px rgba(16,18,22,.05);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0e0f12;
+      --card: #17191d;
+      --ink: #f0f2f5;
+      --muted: #9aa1ac;
+      --muted-2: #6b7280;
+      --line: #262a30;
+      --line-2: #20242a;
+      --accent: #5b8bff;
+      --accent-soft: #1a2233;
+      --good: #35c98e;
+      --good-soft: #14261f;
+      --warn: #f0925a;
+      --warn-soft: #2a1c14;
+      --red: #f26d6d;
+      --red-soft: #2a1414;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+    }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 18px 80px; }
+  .num { font-variant-numeric: tabular-nums; }
+
+  /* header */
+  .top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+  h1 { font-size: 22px; font-weight: 650; margin: 0; letter-spacing: -.01em; }
+  .top .sub { color: var(--muted); font-size: 13px; }
+
+  /* tabs */
+  .tabs { display: inline-flex; gap: 4px; background: var(--line-2); border: 1px solid var(--line); padding: 4px; border-radius: 12px; margin-bottom: 22px; }
+  .tab {
+    border: none; background: transparent; color: var(--muted); cursor: pointer;
+    padding: 8px 16px; border-radius: 9px; font: inherit; font-weight: 550; transition: .12s;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+  .tab:hover { color: var(--ink); }
+  .tab.active { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
+  .tab .pill { font-size: 11px; font-weight: 600; color: var(--muted); }
+  .tab.active .pill { color: var(--accent); }
+
+  /* summary */
+  .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
+  .summary.cols3 { grid-template-columns: repeat(3, 1fr); }
+  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .stat .k { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
+  .stat .v { font-size: 20px; font-weight: 650; letter-spacing: -.01em; }
+  .stat.accent .v { color: var(--accent); }
+  .stat.good .v { color: var(--good); }
+  .stat.warn .v { color: var(--warn); }
+  .stat.red .v { color: var(--red); }
+
+  /* add row */
+  .add {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 14px; margin-bottom: 22px; box-shadow: var(--shadow);
+    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  input, button, textarea { font: inherit; }
+  input {
+    background: var(--bg); border: 1px solid var(--line); color: var(--ink);
+    border-radius: 10px; padding: 9px 12px; outline: none;
+  }
+  input:focus { border-color: var(--accent); }
+  input[type="date"] { color-scheme: light dark; }
+  .add input.grow { flex: 1 1 180px; }
+  .add input.money { width: 130px; }
+
+  .btn {
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: 10px; padding: 9px 14px; cursor: pointer; transition: .12s;
+  }
+  .btn:hover { border-color: var(--muted); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 550; }
+  .btn.primary:hover { filter: brightness(1.05); }
+  .btn.ghost { border-color: transparent; background: transparent; color: var(--muted); padding: 6px 8px; }
+  .btn.ghost:hover { color: var(--ink); background: var(--line-2); }
+  .btn.tiny { padding: 4px 8px; font-size: 12px; }
+  .btn.danger:hover { border-color: var(--red); color: var(--red); }
+
+  /* client card */
+  .client { background: var(--card); border: 1px solid var(--line); border-radius: 16px; margin-bottom: 14px; box-shadow: var(--shadow); overflow: hidden; }
+  .client.paused { opacity: .62; }
+  .chead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 18px; }
+  .cname { font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+  .tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; letter-spacing: .01em; }
+  .tag.paused { background: var(--line-2); color: var(--muted); }
+  .cmeta { color: var(--muted); font-size: 13px; margin-top: 3px; }
+  .cmeta b { color: var(--ink); font-weight: 600; }
+  .cnote { color: var(--muted); font-size: 13px; margin-top: 6px; font-style: italic; }
+  .cactions { display: flex; gap: 2px; flex-shrink: 0; }
+
+  .cbadges { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 18px 14px; }
+  .badge { font-size: 12.5px; padding: 6px 11px; border-radius: 10px; display: inline-flex; gap: 6px; align-items: baseline; }
+  .badge .bl { color: var(--muted); }
+  .badge b { font-weight: 650; }
+  .badge.good { background: var(--good-soft); color: var(--good); }
+  .badge.good .bl { color: var(--good); opacity: .8; }
+  .badge.warn { background: var(--warn-soft); color: var(--warn); }
+  .badge.warn .bl { color: var(--warn); opacity: .8; }
+  .badge.red { background: var(--red-soft); color: var(--red); }
+  .badge.red .bl { color: var(--red); opacity: .8; }
+  .badge.flat { background: var(--line-2); }
+
+  .cbody { border-top: 1px solid var(--line-2); padding: 14px 18px; display: none; }
+  .client.open .cbody { display: block; }
+
+  .payadd { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
+  .payadd input.money { width: 120px; }
+  .payadd input.pnote { flex: 1 1 140px; }
+
+  table.pays { width: 100%; border-collapse: collapse; }
+  table.pays td { padding: 8px 6px; border-bottom: 1px solid var(--line-2); font-size: 14px; }
+  table.pays tr:last-child td { border-bottom: none; }
+  table.pays .amt { font-weight: 600; text-align: right; white-space: nowrap; }
+  table.pays .dt { color: var(--muted); width: 120px; white-space: nowrap; }
+  table.pays .pn { color: var(--muted); }
+  table.pays .del { width: 34px; text-align: right; }
+  .empty-pays { color: var(--muted-2); font-size: 13px; padding: 6px 0; }
+
+  /* expenses list */
+  .exp-card { background: var(--card); border: 1px solid var(--line); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; }
+  .exp-group-h { padding: 12px 18px 6px; font-size: 12px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; color: var(--muted-2); display: flex; justify-content: space-between; }
+  .exp-group-h .sum { color: var(--muted); }
+  table.exp { width: 100%; border-collapse: collapse; }
+  table.exp td { padding: 11px 18px; border-top: 1px solid var(--line-2); font-size: 14px; vertical-align: baseline; }
+  table.exp .dt { color: var(--muted); width: 110px; white-space: nowrap; }
+  table.exp .ti { font-weight: 500; }
+  table.exp .en { color: var(--muted); font-size: 13px; }
+  table.exp .amt { font-weight: 600; text-align: right; white-space: nowrap; color: var(--red); }
+  table.exp .del { width: 34px; text-align: right; }
+
+  .empty {
+    text-align: center; color: var(--muted); padding: 48px 20px;
+    border: 1px dashed var(--line); border-radius: 16px; background: var(--card);
+  }
+
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 30px; color: var(--muted); }
+  .tools .hint { flex-basis: 100%; text-align: center; font-size: 12px; color: var(--muted-2); margin-bottom: 4px; }
+
+  [hidden] { display: none !important; }
+
+  @media (max-width: 640px) {
+    .summary { grid-template-columns: repeat(2, 1fr); }
+    .cactions { order: 3; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div>
+      <h1>Учёт</h1>
+      <div class="sub">клиенты и личные расходы · <span id="today"></span></div>
+    </div>
+  </div>
+
+  <div class="tabs" id="tabs">
+    <button class="tab active" data-tab="clients">Клиенты <span class="pill">доход</span></button>
+    <button class="tab" data-tab="expenses">Расходы <span class="pill">−</span></button>
+  </div>
+
+  <!-- ===== КЛИЕНТЫ ===== -->
+  <section id="view-clients">
+    <div class="summary cols3" id="summary"></div>
+
+    <form class="add" id="addForm" autocomplete="off">
+      <input class="grow" id="cName" placeholder="Имя клиента / компания" required>
+      <input class="money num" id="cMonthly" type="number" min="0" step="1" placeholder="в месяц, ₼">
+      <input class="money num" id="cCost" type="number" min="0" step="1" placeholder="себест., ₼">
+      <input class="grow" id="cNoteIn" placeholder="заметка (необязательно)" style="flex-basis:140px">
+      <button class="btn primary" type="submit">Добавить клиента</button>
+    </form>
+
+    <div id="list"></div>
+  </section>
+
+  <!-- ===== РАСХОДЫ ===== -->
+  <section id="view-expenses" hidden>
+    <div class="summary" id="expSummary"></div>
+
+    <form class="add" id="expForm" autocomplete="off">
+      <input class="grow" id="eTitle" placeholder="Куда / на что" required>
+      <input class="money num" id="eAmount" type="number" min="0" step="1" placeholder="сумма, ₼" required>
+      <input id="eDate" type="date" required>
+      <input class="grow" id="eNote" placeholder="комментарий" style="flex-basis:140px">
+      <button class="btn primary" type="submit">Записать расход</button>
+    </form>
+
+    <div id="expList"></div>
+  </section>
+
+  <div class="tools">
+    <div class="hint">Данные хранятся только в этом браузере. Делайте бэкап регулярно.</div>
+    <button class="btn tiny" id="exportBtn">↓ Экспорт (бэкап)</button>
+    <button class="btn tiny" id="importBtn">↑ Импорт</button>
+    <input type="file" id="importFile" accept="application/json" hidden>
+  </div>
+
+</div>
+
+<script>
+"use strict";
+
+const KEY = "clients-tracker/v1";
+const $ = (s, r=document) => r.querySelector(s);
+
+/* ---------- state ---------- */
+let state = load();
+
+function load() {
+  try {
+    const raw = localStorage.getItem(KEY);
+    if (raw) {
+      const s = JSON.parse(raw);
+      if (!Array.isArray(s.clients)) s.clients = [];
+      if (!Array.isArray(s.expenses)) s.expenses = []; // добавлено в v1.1
+      return s;
+    }
+  } catch (e) {}
+  return { clients: [], expenses: [] };
+}
+function save() {
+  localStorage.setItem(KEY, JSON.stringify(state));
+}
+const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+
+/* ---------- helpers ---------- */
+const fmt = n => (Math.round(n) || 0).toLocaleString("ru-RU") + " ₼";
+const todayISO = () => new Date().toISOString().slice(0, 10);
+const monthKey = iso => (iso || "").slice(0, 7);
+const nowMonth = () => todayISO().slice(0, 7);
+
+function fmtDate(iso) {
+  const d = new Date(iso + "T00:00:00");
+  if (isNaN(d)) return iso;
+  return d.toLocaleDateString("ru-RU", { day: "numeric", month: "short", year: "numeric" });
+}
+function fmtMonthTitle(mk) {
+  const d = new Date(mk + "-01T00:00:00");
+  if (isNaN(d)) return mk;
+  return d.toLocaleDateString("ru-RU", { month: "long", year: "numeric" });
+}
+
+function paidThisMonth(c) {
+  const m = nowMonth();
+  return c.payments.filter(p => monthKey(p.date) === m).reduce((s, p) => s + p.amount, 0);
+}
+const totalPaid = c => c.payments.reduce((s, p) => s + p.amount, 0);
+const monthRemaining = c => Math.max(0, (c.monthly || 0) - paidThisMonth(c));
+
+const spentThisMonth = () => state.expenses.filter(e => monthKey(e.date) === nowMonth()).reduce((s, e) => s + e.amount, 0);
+const spentTotal = () => state.expenses.reduce((s, e) => s + e.amount, 0);
+const gotThisMonth = () => state.clients.filter(c => !c.paused).reduce((s, c) => s + paidThisMonth(c), 0);
+
+/* ---------- render ---------- */
+function render() {
+  $("#today").textContent = new Date().toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
+  renderClientSummary();
+  renderList();
+  renderExpSummary();
+  renderExpList();
+  save();
+}
+
+function statCard(k, v, cls) {
+  return `<div class="stat ${cls||""}"><div class="k">${k}</div><div class="v num">${v}</div></div>`;
+}
+
+function renderClientSummary() {
+  const active = state.clients.filter(c => !c.paused);
+  const expected = active.reduce((s, c) => s + (c.monthly || 0), 0);
+  const cost = active.reduce((s, c) => s + (c.cost || 0), 0);
+  const profit = expected - cost;                         // доход − себестоимость
+  const got = active.reduce((s, c) => s + paidThisMonth(c), 0);
+  const remain = active.reduce((s, c) => s + monthRemaining(c), 0);
+  const cnt = state.clients.length + (state.clients.some(c => c.paused) ? ` · ${active.length} активных` : "");
+
+  $("#summary").innerHTML =
+    statCard("Ожидается в месяц", fmt(expected), "accent") +
+    statCard("Себестоимость в месяц", fmt(cost), "warn") +
+    statCard("Чистая прибыль в месяц", (profit < 0 ? "−" : "") + fmt(Math.abs(profit)), profit < 0 ? "red" : "good") +
+    statCard("Получено в этом месяце", fmt(got), "good") +
+    statCard("Остаток за месяц", fmt(remain), remain > 0 ? "warn" : "good") +
+    statCard("Клиентов", cnt);
+}
+
+function renderExpSummary() {
+  const got = gotThisMonth();
+  const spent = spentThisMonth();
+  const balance = got - spent;
+  $("#expSummary").innerHTML =
+    statCard("Потрачено в этом месяце", fmt(spent), "red") +
+    statCard("Получено в этом месяце", fmt(got), "good") +
+    statCard("Баланс месяца", (balance < 0 ? "−" : "") + fmt(Math.abs(balance)), balance < 0 ? "red" : "good") +
+    statCard("Потрачено всего", fmt(spentTotal()));
+}
+
+function renderList() {
+  const list = $("#list");
+  if (state.clients.length === 0) {
+    list.innerHTML = `<div class="empty">Пока нет клиентов.<br>Добавьте первого в форме выше.</div>`;
+    return;
+  }
+  const sorted = [...state.clients].sort((a, b) =>
+    (a.paused === b.paused) ? a.name.localeCompare(b.name, "ru") : (a.paused ? 1 : -1)
+  );
+  list.innerHTML = sorted.map(clientHTML).join("");
+}
+
+function clientHTML(c) {
+  const got = paidThisMonth(c);
+  const rem = monthRemaining(c);
+  const total = totalPaid(c);
+  const cost = c.cost || 0;
+  const profit = (c.monthly || 0) - cost;                 // прибыль с клиента в месяц
+  const monthPaid = c.monthly > 0 && rem === 0 && got > 0;
+
+  const monthBadge = c.monthly > 0
+    ? (monthPaid
+        ? `<span class="badge good"><span class="bl">этот месяц</span><b>оплачен</b></span>`
+        : `<span class="badge warn"><span class="bl">остаток за месяц</span><b class="num">${fmt(rem)}</b></span>`)
+    : "";
+
+  const profitBadge = (c.monthly || cost)
+    ? `<span class="badge ${profit < 0 ? "red" : "good"}"><span class="bl">прибыль/мес</span><b class="num">${(profit < 0 ? "−" : "") + fmt(Math.abs(profit))}</b></span>`
+    : "";
+
+  const pays = c.payments.slice().sort((a, b) => b.date.localeCompare(a.date));
+  const paysRows = pays.length
+    ? pays.map(p => `<tr>
+        <td class="dt num">${fmtDate(p.date)}</td>
+        <td class="pn">${p.note ? escapeHtml(p.note) : ""}</td>
+        <td class="amt num">${fmt(p.amount)}</td>
+        <td class="del"><button class="btn ghost tiny" data-act="delpay" data-c="${c.id}" data-p="${p.id}" title="Удалить платёж">✕</button></td>
+      </tr>`).join("")
+    : `<tr><td colspan="4" class="empty-pays">Платежей ещё не было.</td></tr>`;
+
+  return `
+  <div class="client ${c.open ? "open" : ""} ${c.paused ? "paused" : ""}">
+    <div class="chead">
+      <div>
+        <div class="cname">
+          ${escapeHtml(c.name)}
+          ${c.paused ? `<span class="tag paused">на паузе</span>` : ""}
+        </div>
+        <div class="cmeta">
+          ${c.monthly > 0 ? `<b class="num">${fmt(c.monthly)}</b> в месяц · ` : ""}${cost > 0 ? `себест. <b class="num">${fmt(cost)}</b> · ` : ""}получено в этом месяце <b class="num">${fmt(got)}</b>
+        </div>
+        ${c.note ? `<div class="cnote">${escapeHtml(c.note)}</div>` : ""}
+      </div>
+      <div class="cactions">
+        <button class="btn ghost tiny" data-act="toggle" data-c="${c.id}">${c.open ? "Свернуть" : "Платежи"}</button>
+        <button class="btn ghost tiny" data-act="edit" data-c="${c.id}">Изменить</button>
+        <button class="btn ghost tiny" data-act="pause" data-c="${c.id}">${c.paused ? "Возобновить" : "Пауза"}</button>
+        <button class="btn ghost tiny danger" data-act="delclient" data-c="${c.id}">Удалить</button>
+      </div>
+    </div>
+
+    <div class="cbadges">
+      ${monthBadge}
+      ${profitBadge}
+      <span class="badge flat"><span class="bl">всего оплачено</span><b class="num">${fmt(total)}</b></span>
+      <span class="badge flat"><span class="bl">платежей</span><b class="num">${c.payments.length}</b></span>
+    </div>
+
+    <div class="cbody">
+      <form class="payadd" data-act="addpay" data-c="${c.id}">
+        <input class="money num" name="amount" type="number" min="0" step="1" placeholder="сумма, ₼" required>
+        <input type="date" name="date" value="${todayISO()}" required>
+        <input class="pnote" name="note" placeholder="комментарий (необязательно)">
+        <button class="btn primary tiny" type="submit">Записать платёж</button>
+      </form>
+      <table class="pays"><tbody>${paysRows}</tbody></table>
+    </div>
+  </div>`;
+}
+
+function renderExpList() {
+  const list = $("#expList");
+  if (state.expenses.length === 0) {
+    list.innerHTML = `<div class="empty">Расходов пока нет.<br>Запишите первый в форме выше.</div>`;
+    return;
+  }
+  // Группируем по месяцам, свежие сверху.
+  const byMonth = {};
+  for (const e of state.expenses) {
+    const mk = monthKey(e.date) || "—";
+    (byMonth[mk] ||= []).push(e);
+  }
+  const months = Object.keys(byMonth).sort((a, b) => b.localeCompare(a));
+
+  list.innerHTML = months.map(mk => {
+    const items = byMonth[mk].sort((a, b) => b.date.localeCompare(a.date));
+    const sum = items.reduce((s, e) => s + e.amount, 0);
+    const rows = items.map(e => `<tr>
+        <td class="dt num">${fmtDate(e.date)}</td>
+        <td class="ti">${escapeHtml(e.title)}${e.note ? `<div class="en">${escapeHtml(e.note)}</div>` : ""}</td>
+        <td class="amt num">−${fmt(e.amount)}</td>
+        <td class="del"><button class="btn ghost tiny" data-act="delexp" data-e="${e.id}" title="Удалить расход">✕</button></td>
+      </tr>`).join("");
+    return `<div class="exp-card" style="margin-bottom:14px">
+      <div class="exp-group-h"><span>${fmtMonthTitle(mk)}</span><span class="sum num">${fmt(sum)}</span></div>
+      <table class="exp"><tbody>${rows}</tbody></table>
+    </div>`;
+  }).join("");
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+}
+
+/* ---------- tabs ---------- */
+$("#tabs").addEventListener("click", e => {
+  const t = e.target.closest(".tab");
+  if (!t) return;
+  const tab = t.dataset.tab;
+  document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === t));
+  $("#view-clients").hidden = tab !== "clients";
+  $("#view-expenses").hidden = tab !== "expenses";
+});
+
+/* ---------- clients: actions ---------- */
+function getClient(id) { return state.clients.find(c => c.id === id); }
+
+$("#addForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const name = $("#cName").value.trim();
+  if (!name) return;
+  const monthly = Math.max(0, Number($("#cMonthly").value) || 0);
+  const cost = Math.max(0, Number($("#cCost").value) || 0);
+  const note = $("#cNoteIn").value.trim();
+  state.clients.push({ id: uid(), name, monthly, cost, note, paused: false, open: true, payments: [] });
+  e.target.reset();
+  render();
+});
+
+$("#list").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-act]");
+  if (!btn) return;
+  const c = getClient(btn.dataset.c);
+  if (!c) return;
+  const act = btn.dataset.act;
+
+  if (act === "toggle") { c.open = !c.open; render(); }
+  else if (act === "pause") { c.paused = !c.paused; render(); }
+  else if (act === "delclient") {
+    if (confirm(`Удалить клиента «${c.name}» и всю историю платежей? Это не отменить.`)) {
+      state.clients = state.clients.filter(x => x.id !== c.id);
+      render();
+    }
+  }
+  else if (act === "delpay") {
+    c.payments = c.payments.filter(p => p.id !== btn.dataset.p);
+    render();
+  }
+  else if (act === "edit") editClient(c);
+});
+
+$("#list").addEventListener("submit", e => {
+  const form = e.target.closest("form[data-act='addpay']");
+  if (!form) return;
+  e.preventDefault();
+  const c = getClient(form.dataset.c);
+  if (!c) return;
+  const amount = Math.max(0, Number(form.amount.value) || 0);
+  if (!amount) return;
+  const date = form.date.value || todayISO();
+  const note = form.note.value.trim();
+  c.payments.push({ id: uid(), amount, date, note });
+  c.open = true;
+  render();
+});
+
+function editClient(c) {
+  const name = prompt("Имя клиента / компания:", c.name);
+  if (name === null) return;
+  const monthly = prompt("Ежемесячная оплата, ₼ (0 — если нет):", c.monthly || 0);
+  if (monthly === null) return;
+  const cost = prompt("Себестоимость в месяц, ₼ (0 — если нет):", c.cost || 0);
+  if (cost === null) return;
+  const note = prompt("Заметка:", c.note || "");
+  if (note === null) return;
+  c.name = name.trim() || c.name;
+  c.monthly = Math.max(0, Number(monthly) || 0);
+  c.cost = Math.max(0, Number(cost) || 0);
+  c.note = note.trim();
+  render();
+}
+
+/* ---------- expenses: actions ---------- */
+$("#eDate").value = todayISO();
+
+$("#expForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const title = $("#eTitle").value.trim();
+  const amount = Math.max(0, Number($("#eAmount").value) || 0);
+  if (!title || !amount) return;
+  const date = $("#eDate").value || todayISO();
+  const note = $("#eNote").value.trim();
+  state.expenses.push({ id: uid(), title, amount, date, note });
+  $("#eTitle").value = ""; $("#eAmount").value = ""; $("#eNote").value = "";
+  $("#eDate").value = date; // дату оставляем — удобно вносить несколько за день
+  render();
+});
+
+$("#expList").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-act='delexp']");
+  if (!btn) return;
+  state.expenses = state.expenses.filter(x => x.id !== btn.dataset.e);
+  render();
+});
+
+/* ---------- backup ---------- */
+$("#exportBtn").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `учёт-${todayISO()}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+$("#importBtn").addEventListener("click", () => $("#importFile").click());
+$("#importFile").addEventListener("change", e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try {
+      const data = JSON.parse(reader.result);
+      if (!data || !Array.isArray(data.clients)) throw new Error("формат");
+      if (!Array.isArray(data.expenses)) data.expenses = [];
+      if (!confirm("Заменить текущие данные содержимым файла?")) return;
+      state = data;
+      render();
+    } catch (err) {
+      alert("Не удалось прочитать файл: это не похоже на бэкап.");
+    }
+  };
+  reader.readAsText(file);
+  e.target.value = "";
+});
+
+render();
+
+/* ---------- офлайн-режим (PWA) ---------- */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
