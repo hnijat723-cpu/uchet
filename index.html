@@ -203,6 +203,7 @@
 
   <div class="tabs" id="tabs">
     <button class="tab active" data-tab="clients">Клиенты <span class="pill">доход</span></button>
+    <button class="tab" data-tab="staff">Сотрудники <span class="pill">−</span></button>
     <button class="tab" data-tab="expenses">Расходы <span class="pill">−</span></button>
   </div>
 
@@ -219,6 +220,20 @@
     </form>
 
     <div id="list"></div>
+  </section>
+
+  <!-- ===== СОТРУДНИКИ ===== -->
+  <section id="view-staff" hidden>
+    <div class="summary cols3" id="staffSummary"></div>
+
+    <form class="add" id="staffForm" autocomplete="off">
+      <input class="grow" id="sName" placeholder="Имя сотрудника" required>
+      <input class="grow" id="sRole" placeholder="Роль (фотограф, видео, моушн…)" style="flex-basis:190px">
+      <input class="grow" id="sNote" placeholder="заметка" style="flex-basis:130px">
+      <button class="btn primary" type="submit">Добавить сотрудника</button>
+    </form>
+
+    <div id="staffList"></div>
   </section>
 
   <!-- ===== РАСХОДЫ ===== -->
@@ -261,10 +276,11 @@ function load() {
       const s = JSON.parse(raw);
       if (!Array.isArray(s.clients)) s.clients = [];
       if (!Array.isArray(s.expenses)) s.expenses = []; // добавлено в v1.1
+      if (!Array.isArray(s.staff)) s.staff = [];       // добавлено в v1.2
       return s;
     }
   } catch (e) {}
-  return { clients: [], expenses: [] };
+  return { clients: [], expenses: [], staff: [] };
 }
 function save() {
   localStorage.setItem(KEY, JSON.stringify(state));
@@ -299,11 +315,18 @@ const spentThisMonth = () => state.expenses.filter(e => monthKey(e.date) === now
 const spentTotal = () => state.expenses.reduce((s, e) => s + e.amount, 0);
 const gotThisMonth = () => state.clients.filter(c => !c.paused).reduce((s, c) => s + paidThisMonth(c), 0);
 
+const staffPaidThisMonth = m => m.payments.filter(p => monthKey(p.date) === nowMonth()).reduce((s, p) => s + p.amount, 0);
+const staffTotal = m => m.payments.reduce((s, p) => s + p.amount, 0);
+const staffMonthAll = () => state.staff.reduce((s, m) => s + staffPaidThisMonth(m), 0);
+const staffAll = () => state.staff.reduce((s, m) => s + staffTotal(m), 0);
+
 /* ---------- render ---------- */
 function render() {
   $("#today").textContent = new Date().toLocaleDateString("ru-RU", { day: "numeric", month: "long", year: "numeric" });
   renderClientSummary();
   renderList();
+  renderStaffSummary();
+  renderStaffList();
   renderExpSummary();
   renderExpList();
   save();
@@ -452,6 +475,72 @@ function renderExpList() {
   }).join("");
 }
 
+/* ---------- сотрудники: рендер ---------- */
+function renderStaffSummary() {
+  $("#staffSummary").innerHTML =
+    statCard("Выплачено в этом месяце", fmt(staffMonthAll()), "red") +
+    statCard("Всего выплачено", fmt(staffAll())) +
+    statCard("Сотрудников", state.staff.length);
+}
+
+function renderStaffList() {
+  const list = $("#staffList");
+  if (state.staff.length === 0) {
+    list.innerHTML = `<div class="empty">Сотрудников пока нет.<br>Добавьте первого в форме выше.</div>`;
+    return;
+  }
+  const sorted = [...state.staff].sort((a, b) => a.name.localeCompare(b.name, "ru"));
+  list.innerHTML = sorted.map(staffHTML).join("");
+}
+
+function staffHTML(m) {
+  const got = staffPaidThisMonth(m);
+  const total = staffTotal(m);
+  const pays = m.payments.slice().sort((a, b) => b.date.localeCompare(a.date));
+  const paysRows = pays.length
+    ? pays.map(p => `<tr>
+        <td class="dt num">${fmtDate(p.date)}</td>
+        <td class="pn">${p.note ? escapeHtml(p.note) : ""}</td>
+        <td class="amt num">−${fmt(p.amount)}</td>
+        <td class="del"><button class="btn ghost tiny" data-act="delpay" data-m="${m.id}" data-p="${p.id}" title="Удалить выплату">✕</button></td>
+      </tr>`).join("")
+    : `<tr><td colspan="4" class="empty-pays">Выплат ещё не было.</td></tr>`;
+
+  return `
+  <div class="client ${m.open ? "open" : ""}">
+    <div class="chead">
+      <div>
+        <div class="cname">
+          ${escapeHtml(m.name)}
+          ${m.role ? `<span class="tag paused">${escapeHtml(m.role)}</span>` : ""}
+        </div>
+        <div class="cmeta">выплачено в этом месяце <b class="num">${fmt(got)}</b></div>
+        ${m.note ? `<div class="cnote">${escapeHtml(m.note)}</div>` : ""}
+      </div>
+      <div class="cactions">
+        <button class="btn ghost tiny" data-act="toggle" data-m="${m.id}">${m.open ? "Свернуть" : "Выплаты"}</button>
+        <button class="btn ghost tiny" data-act="edit" data-m="${m.id}">Изменить</button>
+        <button class="btn ghost tiny danger" data-act="delstaff" data-m="${m.id}">Удалить</button>
+      </div>
+    </div>
+
+    <div class="cbadges">
+      <span class="badge flat"><span class="bl">всего выплачено</span><b class="num">${fmt(total)}</b></span>
+      <span class="badge flat"><span class="bl">выплат</span><b class="num">${m.payments.length}</b></span>
+    </div>
+
+    <div class="cbody">
+      <form class="payadd" data-act="addpay" data-m="${m.id}">
+        <input class="money num" name="amount" type="number" min="0" step="1" placeholder="сумма, ₼" required>
+        <input type="date" name="date" value="${todayISO()}" required>
+        <input class="pnote" name="note" placeholder="за что (необязательно)">
+        <button class="btn primary tiny" type="submit">Записать выплату</button>
+      </form>
+      <table class="pays"><tbody>${paysRows}</tbody></table>
+    </div>
+  </div>`;
+}
+
 function escapeHtml(s) {
   return String(s).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
 }
@@ -463,6 +552,7 @@ $("#tabs").addEventListener("click", e => {
   const tab = t.dataset.tab;
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === t));
   $("#view-clients").hidden = tab !== "clients";
+  $("#view-staff").hidden = tab !== "staff";
   $("#view-expenses").hidden = tab !== "expenses";
 });
 
@@ -557,6 +647,69 @@ $("#expList").addEventListener("click", e => {
   render();
 });
 
+/* ---------- сотрудники: actions ---------- */
+function getStaff(id) { return state.staff.find(m => m.id === id); }
+
+$("#staffForm").addEventListener("submit", e => {
+  e.preventDefault();
+  const name = $("#sName").value.trim();
+  if (!name) return;
+  const role = $("#sRole").value.trim();
+  const note = $("#sNote").value.trim();
+  state.staff.push({ id: uid(), name, role, note, open: true, payments: [] });
+  e.target.reset();
+  render();
+});
+
+$("#staffList").addEventListener("click", e => {
+  const btn = e.target.closest("button[data-act]");
+  if (!btn) return;
+  const m = getStaff(btn.dataset.m);
+  if (!m) return;
+  const act = btn.dataset.act;
+
+  if (act === "toggle") { m.open = !m.open; render(); }
+  else if (act === "delstaff") {
+    if (confirm(`Удалить сотрудника «${m.name}» и всю историю выплат? Это не отменить.`)) {
+      state.staff = state.staff.filter(x => x.id !== m.id);
+      render();
+    }
+  }
+  else if (act === "delpay") {
+    m.payments = m.payments.filter(p => p.id !== btn.dataset.p);
+    render();
+  }
+  else if (act === "edit") editStaff(m);
+});
+
+$("#staffList").addEventListener("submit", e => {
+  const form = e.target.closest("form[data-act='addpay']");
+  if (!form) return;
+  e.preventDefault();
+  const m = getStaff(form.dataset.m);
+  if (!m) return;
+  const amount = Math.max(0, Number(form.amount.value) || 0);
+  if (!amount) return;
+  const date = form.date.value || todayISO();
+  const note = form.note.value.trim();
+  m.payments.push({ id: uid(), amount, date, note });
+  m.open = true;
+  render();
+});
+
+function editStaff(m) {
+  const name = prompt("Имя сотрудника:", m.name);
+  if (name === null) return;
+  const role = prompt("Роль:", m.role || "");
+  if (role === null) return;
+  const note = prompt("Заметка:", m.note || "");
+  if (note === null) return;
+  m.name = name.trim() || m.name;
+  m.role = role.trim();
+  m.note = note.trim();
+  render();
+}
+
 /* ---------- backup ---------- */
 $("#exportBtn").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify(state, null, 2)], { type: "application/json" });
@@ -576,6 +729,7 @@ $("#importFile").addEventListener("change", e => {
       const data = JSON.parse(reader.result);
       if (!data || !Array.isArray(data.clients)) throw new Error("формат");
       if (!Array.isArray(data.expenses)) data.expenses = [];
+      if (!Array.isArray(data.staff)) data.staff = [];
       if (!confirm("Заменить текущие данные содержимым файла?")) return;
       state = data;
       render();
