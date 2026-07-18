@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Uçot — müştərilər və xərclər</title>
 
-<!-- PWA: устанавливается на главный экран, работает офлайн -->
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#f5f5fb" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#111225" media="(prefers-color-scheme: dark)">
@@ -86,233 +85,199 @@
     margin: 0;
     background-color: var(--bg);
     color: var(--ink);
-    font: 15px/1.55 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font: 15px/1.5 "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     letter-spacing: -.006em;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
-  .wrap { max-width: 860px; margin: 0 auto; padding: 28px 18px 80px; }
+  .wrap { max-width: 620px; margin: 0 auto; padding: 26px 18px 100px; }
   .num { font-variant-numeric: tabular-nums; }
 
   /* header */
-  .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 20px; }
-  .brand { display: flex; align-items: center; gap: 13px; }
+  .top { display: flex; align-items: center; gap: 13px; margin-bottom: 20px; }
   .logo {
-    width: 48px; height: 48px; border-radius: 15px; flex: 0 0 auto; display: block;
+    width: 46px; height: 46px; border-radius: 14px; flex: 0 0 auto; display: block;
     box-shadow: 0 8px 20px rgba(20,18,50,.28), inset 0 1px 0 rgba(255,255,255,.15);
   }
-  h1 { font-size: 23px; font-weight: 800; margin: 0; letter-spacing: -.03em; color: var(--ink); }
+  h1 { font-size: 22px; font-weight: 800; margin: 0; letter-spacing: -.03em; color: var(--ink); }
   .top .sub { color: var(--muted); font-size: 13px; margin-top: 2px; }
 
-  /* tabs */
+  /* tabs (desktop pills) */
   .tabs { display: inline-flex; gap: 4px; background: var(--line-2); border: 1px solid var(--line); padding: 5px; border-radius: 14px; margin-bottom: 22px; }
   .tab {
     border: none; background: transparent; color: var(--muted); cursor: pointer;
-    padding: 8px 15px; border-radius: 10px; font: inherit; font-weight: 550; transition: .16s;
+    padding: 8px 15px; border-radius: 10px; font: inherit; font-weight: 600; transition: .16s;
     display: inline-flex; align-items: center; gap: 8px;
   }
   .tab:hover { color: var(--ink); }
   .tab.active { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
   .tab.active .ti { color: var(--accent); }
-  .tab .pill { font-size: 11px; font-weight: 600; color: var(--muted-2); }
-  .tab.active .pill { color: var(--accent); }
+  .tab .tl { display: block; }
   .tab .ti { display: inline-flex; }
   .tab .ti svg { width: 17px; height: 17px; display: block; }
 
-  /* summary */
-  .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
-  .summary.cols3 { grid-template-columns: repeat(3, 1fr); }
-  .stat {
-    background: var(--card); border: 1px solid var(--line); border-radius: 20px;
-    padding: 16px 17px; box-shadow: var(--shadow), inset 0 1px 0 var(--hi);
+  /* hero + mini stats */
+  .hero {
+    background: var(--grad); color: #fff; border-radius: 22px; padding: 18px 20px;
+    box-shadow: 0 14px 30px var(--glow); margin-bottom: 12px;
   }
-  .stat .k { color: var(--muted); font-size: 12px; font-weight: 600; margin-bottom: 7px; }
-  .stat .v { font-size: 22px; font-weight: 800; letter-spacing: -.03em; }
-  /* Акцентная карточка — фиолетовый «герой», как в референсе */
-  .stat.accent {
-    background: var(--grad); border: none; color: #fff;
-    box-shadow: 0 12px 26px var(--glow);
-  }
-  .stat.accent .k { color: rgba(255,255,255,.82); }
-  .stat.accent .v { color: #fff; }
-  .stat.good .v { color: var(--good); }
-  .stat.warn .v { color: var(--warn); }
-  .stat.red .v { color: var(--red); }
+  .hero .hk { font-size: 12.5px; font-weight: 600; color: rgba(255,255,255,.82); }
+  .hero .hv { font-size: 31px; font-weight: 800; letter-spacing: -.03em; margin-top: 5px; }
+  .mini-row { display: flex; gap: 10px; margin-bottom: 22px; }
+  .mini { flex: 1; min-width: 0; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 11px 13px; box-shadow: var(--shadow); }
+  .mini .mk { font-size: 11px; color: var(--muted); font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .mini .mv { font-size: 16px; font-weight: 800; letter-spacing: -.02em; margin-top: 3px; }
+  .mini .mv.good { color: var(--good); } .mini .mv.red { color: var(--red); } .mini .mv.warn { color: var(--warn); }
 
-  /* add row */
-  .add {
-    background: var(--card); border: 1px solid var(--line); border-radius: 20px;
-    padding: 16px; margin-bottom: 22px; box-shadow: var(--shadow), inset 0 1px 0 var(--hi);
-    display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  /* section label */
+  .sec { display: flex; align-items: baseline; gap: 8px; margin: 4px 4px 10px; font-size: 13px; font-weight: 700; color: var(--ink); }
+  .sec-c { color: var(--muted-2); font-weight: 600; font-size: 12px; }
+
+  /* list of clean rows inside a card */
+  .rows { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow), inset 0 1px 0 var(--hi); overflow: hidden; margin-bottom: 14px; }
+  .row + .row { border-top: 1px solid var(--line-2); }
+  .row.paused { opacity: .58; }
+  .row-head { display: flex; align-items: center; gap: 12px; padding: 12px 15px; cursor: pointer; }
+  .row-head.static { cursor: default; }
+  .ava {
+    width: 42px; height: 42px; border-radius: 50%; flex: 0 0 auto;
+    display: grid; place-items: center; font-weight: 700; font-size: 17px; color: #fff;
+    background: hsl(var(--h,220) 58% 55%);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.28);
   }
+  .row-mid { flex: 1; min-width: 0; }
+  .row-title { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 7px; min-width: 0; }
+  .row-title .nm { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-sub { font-size: 12.5px; color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .row-end { text-align: right; flex-shrink: 0; }
+  .row-val { font-size: 15px; font-weight: 700; white-space: nowrap; }
+  .row-val.good { color: var(--good); } .row-val.red { color: var(--red); } .row-val.warn { color: var(--warn); }
+  .row-vsub { font-size: 11px; color: var(--muted-2); margin-top: 1px; }
+  .chev { color: var(--muted-2); display: flex; transition: transform .18s; flex-shrink: 0; }
+  .chev svg { width: 18px; height: 18px; }
+  .row.open .chev { transform: rotate(90deg); }
+  .row-body { display: none; padding: 0 15px 15px; }
+  .row.open .row-body { display: block; }
+  .row-actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+
+  .tag { font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 999px; letter-spacing: .01em; background: var(--accent-soft); color: var(--accent); flex-shrink: 0; }
+  .tag.paused { background: var(--line-2); color: var(--muted); }
+
+  /* badges (detail) */
+  .badges { display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px; }
+  .badge { font-size: 12.5px; padding: 5px 10px; border-radius: 9px; display: inline-flex; gap: 6px; align-items: baseline; background: var(--line-2); }
+  .badge .bl { color: var(--muted); }
+  .badge b { font-weight: 650; }
+  .badge.good { background: var(--good-soft); color: var(--good); } .badge.good .bl { color: var(--good); opacity: .8; }
+  .badge.warn { background: var(--warn-soft); color: var(--warn); } .badge.warn .bl { color: var(--warn); opacity: .8; }
+  .badge.red { background: var(--red-soft); color: var(--red); } .badge.red .bl { color: var(--red); opacity: .8; }
+
+  /* buttons */
   input, button, textarea { font: inherit; }
+  .btn {
+    border: 1px solid var(--line); background: var(--card); color: var(--ink);
+    border-radius: 12px; padding: 9px 14px; cursor: pointer; transition: .14s; font-weight: 600; font-size: 13px;
+  }
+  .btn:hover { background: var(--fill); }
+  .btn:active { transform: translateY(1px); }
+  .btn.primary { border: none; color: #fff; font-weight: 700; background: var(--accent); box-shadow: 0 4px 14px var(--glow); }
+  .btn.primary:hover { background: var(--accent-deep); }
+  .btn.primary:active { transform: translateY(1px); box-shadow: 0 2px 8px var(--glow); }
+  .btn.danger { color: var(--red); }
+  .btn.danger:hover { background: var(--red-soft); }
+  .btn.armed { background: var(--red); border-color: var(--red); color: #fff; }
+  .btn.tiny { padding: 5px 9px; font-size: 12px; }
+  .btn.ico { padding: 6px 8px; border: none; background: transparent; color: var(--muted-2); }
+  .btn.ico:hover { color: var(--red); background: var(--red-soft); }
+
+  /* inputs */
   input {
     background: var(--fill); border: 1.5px solid transparent; color: var(--ink);
-    border-radius: 13px; padding: 11px 14px; outline: none; transition: .15s;
+    border-radius: 13px; padding: 12px 14px; outline: none; transition: .15s; width: 100%;
   }
   input::placeholder { color: var(--muted-2); }
   input:focus { border-color: var(--accent); background: var(--card); box-shadow: 0 0 0 3px var(--ring); }
   input[type="date"] { color-scheme: light dark; }
-  .add input.grow { flex: 1 1 180px; }
-  .add input.money { width: 130px; }
 
-  .btn {
-    border: 1px solid var(--line); background: var(--card); color: var(--ink);
-    border-radius: 13px; padding: 10px 15px; cursor: pointer; transition: .14s; font-weight: 600;
-  }
-  .btn:hover { background: var(--fill); }
-  .btn:active { transform: translateY(1px); }
-  .btn.primary {
-    border: none; color: #fff; font-weight: 700; letter-spacing: -.01em;
-    background: var(--accent);
-    box-shadow: 0 4px 14px var(--glow);
-  }
-  .btn.primary:hover { background: var(--accent-deep); }
-  .btn.primary:active { transform: translateY(1px); box-shadow: 0 2px 8px var(--glow); }
-  .btn.ghost { border-color: transparent; background: transparent; color: var(--muted); padding: 6px 8px; }
-  .btn.ghost:hover { color: var(--ink); background: var(--line-2); }
-  .btn.tiny { padding: 4px 8px; font-size: 12px; }
-  .btn.danger:hover { border-color: var(--red); color: var(--red); }
-  /* Удаление в два нажатия — работает без системного окна (важно для iPhone) */
-  .btn.armed { background: var(--red); border-color: var(--red); color: #fff; }
-
-  /* client card */
-  .client { background: var(--card); border: 1px solid var(--line); border-radius: 20px; margin-bottom: 14px; box-shadow: var(--shadow), inset 0 1px 0 var(--hi); overflow: hidden; }
-  .client.paused { opacity: .62; }
-  .chead { display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 16px 18px; }
-  .chead-main { display: flex; align-items: center; gap: 12px; min-width: 0; flex: 1 1 auto; }
-  .cinfo { min-width: 0; }
-  .ava {
-    width: 44px; height: 44px; border-radius: 50%; flex: 0 0 auto;
-    display: grid; place-items: center; font-weight: 700; font-size: 18px; color: #fff;
-    background: hsl(var(--h,220) 58% 55%);
-    box-shadow: inset 0 1px 0 rgba(255,255,255,.28), 0 2px 6px rgba(0,0,0,.14);
-  }
-  .cname { font-size: 17px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
-  .tag { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 999px; letter-spacing: .01em; }
-  .tag.paused { background: var(--line-2); color: var(--muted); }
-  .cmeta { color: var(--muted); font-size: 13px; margin-top: 3px; }
-  .cmeta b { color: var(--ink); font-weight: 600; }
-  .cnote { color: var(--muted); font-size: 13px; margin-top: 6px; font-style: italic; }
-  .cactions { display: flex; gap: 2px; flex-shrink: 0; }
-
-  .cbadges { display: flex; flex-wrap: wrap; gap: 8px; padding: 0 18px 14px; }
-  .badge { font-size: 12.5px; padding: 6px 11px; border-radius: 10px; display: inline-flex; gap: 6px; align-items: baseline; }
-  .badge .bl { color: var(--muted); }
-  .badge b { font-weight: 650; }
-  .badge.good { background: var(--good-soft); color: var(--good); }
-  .badge.good .bl { color: var(--good); opacity: .8; }
-  .badge.warn { background: var(--warn-soft); color: var(--warn); }
-  .badge.warn .bl { color: var(--warn); opacity: .8; }
-  .badge.red { background: var(--red-soft); color: var(--red); }
-  .badge.red .bl { color: var(--red); opacity: .8; }
-  .badge.flat { background: var(--line-2); }
-
-  .cbody { border-top: 1px solid var(--line-2); padding: 14px 18px; display: none; }
-  .client.open .cbody { display: block; }
-
-  .payadd { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; }
-  .payadd input.money { width: 120px; }
-  .payadd input.pnote { flex: 1 1 140px; }
+  /* inline add-payment inside a row */
+  .payadd { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin: 4px 0 12px; }
+  .payadd input { flex: 1 1 120px; }
+  .payadd input[type="date"] { flex: 1 1 130px; }
+  .payadd .btn { flex: 1 1 100%; }
 
   table.pays { width: 100%; border-collapse: collapse; }
-  table.pays td { padding: 8px 6px; border-bottom: 1px solid var(--line-2); font-size: 14px; }
-  table.pays tr:last-child td { border-bottom: none; }
+  table.pays td { padding: 8px 2px; border-top: 1px solid var(--line-2); font-size: 13.5px; }
   table.pays .amt { font-weight: 600; text-align: right; white-space: nowrap; }
-  table.pays .dt { color: var(--muted); width: 120px; white-space: nowrap; }
+  table.pays .dt { color: var(--muted); width: 108px; white-space: nowrap; }
   table.pays .pn { color: var(--muted); }
-  table.pays .del { width: 34px; text-align: right; }
-  .empty-pays { color: var(--muted-2); font-size: 13px; padding: 6px 0; }
+  table.pays .del { width: 30px; text-align: right; }
+  .empty-pays { color: var(--muted-2); font-size: 13px; padding: 8px 0; }
 
-  /* expenses list */
-  .exp-card { background: var(--card); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow), inset 0 1px 0 var(--hi); overflow: hidden; }
-  .exp-group-h { padding: 12px 18px 6px; font-size: 12px; font-weight: 600; letter-spacing: .03em; text-transform: uppercase; color: var(--muted-2); display: flex; justify-content: space-between; }
-  .exp-group-h .sum { color: var(--muted); }
-  table.exp { width: 100%; border-collapse: collapse; }
-  table.exp td { padding: 11px 18px; border-top: 1px solid var(--line-2); font-size: 14px; vertical-align: baseline; }
-  table.exp .dt { color: var(--muted); width: 110px; white-space: nowrap; }
-  table.exp .ti { font-weight: 500; }
-  table.exp .en { color: var(--muted); font-size: 13px; }
-  table.exp .amt { font-weight: 600; text-align: right; white-space: nowrap; color: var(--red); }
-  table.exp .del { width: 34px; text-align: right; }
-
-  /* приходы: инлайн-редактирование (без всплывающих окон) */
+  /* income inline fields */
   .inc-name {
-    font-size: 16px; font-weight: 700; width: 100%; max-width: 280px;
-    background: transparent; border: 1px solid transparent; color: var(--ink);
-    border-radius: 8px; padding: 4px 6px;
+    font-size: 15px; font-weight: 700; padding: 3px 6px; border-radius: 8px;
+    background: transparent; border: 1px solid transparent; margin-left: -6px;
   }
   .inc-name:focus { border-color: var(--accent); background: var(--fill); }
-  .inc-fields { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; padding-left: 6px; }
-  .inc-fields label { font-size: 12.5px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
-  .inc-fields input { width: 108px; }
+  .inc-fields { display: flex; gap: 12px; margin-top: 6px; }
+  .inc-fields label { font-size: 12px; color: var(--muted); display: inline-flex; align-items: center; gap: 6px; }
+  .inc-fields input { width: 88px; padding: 7px 10px; border-radius: 10px; }
 
-  .empty {
-    text-align: center; color: var(--muted); padding: 48px 20px;
-    border: 1px dashed var(--line); border-radius: 18px; background: var(--card);
-  }
+  .empty { text-align: center; color: var(--muted); padding: 40px 20px; border: 1px dashed var(--line); border-radius: 20px; background: var(--card); }
 
-  .tools { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 30px; color: var(--muted); }
+  .tools { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-top: 26px; }
   .tools .hint { flex-basis: 100%; text-align: center; font-size: 12px; color: var(--muted-2); margin-bottom: 4px; }
+
+  /* FAB */
+  .fab {
+    position: fixed; right: 20px; bottom: 26px; z-index: 25;
+    width: 58px; height: 58px; border-radius: 50%; border: none; cursor: pointer;
+    background: var(--accent); color: #fff; font-size: 30px; font-weight: 400; line-height: 1;
+    display: grid; place-items: center; padding-bottom: 3px;
+    box-shadow: 0 10px 26px var(--glow), 0 2px 6px rgba(20,18,50,.25);
+    transition: transform .15s, background .15s;
+  }
+  .fab:hover { background: var(--accent-deep); }
+  .fab:active { transform: scale(.94); }
+
+  /* bottom sheet */
+  .sheet-backdrop { position: fixed; inset: 0; z-index: 39; background: rgba(10,10,30,.45); opacity: 0; pointer-events: none; transition: opacity .2s; -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px); }
+  .sheet-backdrop.open { opacity: 1; pointer-events: auto; }
+  .sheet {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40; margin: 0 auto; max-width: 560px;
+    background: var(--card); border-top-left-radius: 26px; border-top-right-radius: 26px;
+    padding: 10px 20px calc(22px + env(safe-area-inset-bottom));
+    box-shadow: 0 -12px 44px rgba(10,10,40,.28);
+    transform: translateY(112%); transition: transform .28s cubic-bezier(.4,0,.2,1);
+  }
+  .sheet.open { transform: translateY(0); }
+  .sheet-handle { width: 42px; height: 4px; border-radius: 2px; background: var(--line); margin: 2px auto 14px; }
+  .sheet-title { font-size: 18px; font-weight: 800; letter-spacing: -.02em; margin: 0 2px 16px; }
+  .sheet form { display: none; flex-direction: column; gap: 10px; }
+  .sheet form.on { display: flex; }
+  .sheet .btn.primary { padding: 13px; font-size: 15px; margin-top: 4px; }
 
   [hidden] { display: none !important; }
 
   @media (max-width: 640px) {
-    /* Отступы с учётом Dynamic Island сверху и нижней панели вкладок снизу */
-    .wrap {
-      padding: calc(14px + env(safe-area-inset-top)) 16px
-               calc(90px + env(safe-area-inset-bottom));
-    }
+    .wrap { padding: calc(14px + env(safe-area-inset-top)) 16px calc(96px + env(safe-area-inset-bottom)); }
+    .mini-row { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    .mini-row::-webkit-scrollbar { display: none; }
+    .mini { flex: 0 0 42%; }
 
-    /* Сводка — свайпаемая лента карточек */
-    .summary, .summary.cols3 {
-      display: flex; grid-template-columns: none;
-      gap: 10px; overflow-x: auto; scroll-snap-type: x mandatory;
-      -webkit-overflow-scrolling: touch; padding-bottom: 4px;
-    }
-    .summary::-webkit-scrollbar { display: none; }
-    .stat { flex: 0 0 44%; scroll-snap-align: start; }
+    .fab { right: 16px; bottom: calc(80px + env(safe-area-inset-bottom)); }
 
-    /* Формы — поля на всю ширину */
-    .add { gap: 8px; padding: 12px; }
-    .add input, .add .grow, .add .money { flex: 1 1 100%; width: 100%; }
-    .add .btn.primary { width: 100%; }
-    input { min-height: 48px; }
-
-    .payadd input, .payadd .money, .payadd .pnote { flex: 1 1 100%; width: 100%; }
-    .payadd .btn { width: 100%; }
-
-    .inc-fields label { flex: 1 1 calc(50% - 6px); }
-    .inc-fields input { width: 100%; }
-    .inc-name { max-width: 100%; font-size: 17px; }
-
-    /* Действия — кнопки-пилюли */
-    .chead { flex-direction: column; }
-    .cactions { order: 3; flex-wrap: wrap; gap: 8px; width: 100%; }
-    .cactions .btn { border: 1px solid var(--line); border-radius: 999px; padding: 9px 14px; font-size: 13px; color: var(--ink); }
-    .cactions .btn.danger { color: var(--red); }
-    .cactions .btn.armed { color: #fff; }
-
-    /* Нижняя навигация */
+    /* bottom nav */
     .tabs {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
-      display: flex; gap: 0; margin: 0; border-radius: 0;
-      border: none; border-top: 1px solid var(--line);
+      display: flex; gap: 0; margin: 0; border-radius: 0; border: none; border-top: 1px solid var(--line);
       padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
-      background: var(--bar-bg);
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      backdrop-filter: saturate(180%) blur(20px);
+      background: var(--bar-bg); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px);
       box-shadow: 0 -6px 24px rgba(0,0,0,.10);
     }
-    .tab {
-      position: relative; flex: 1; flex-direction: column; gap: 5px; padding: 4px 2px;
-      border-radius: 14px; font-size: 10.5px; font-weight: 600; color: var(--muted);
-      transition: color .16s;
-    }
+    .tab { flex: 1; flex-direction: column; gap: 5px; padding: 4px 2px; border-radius: 14px; font-size: 10.5px; font-weight: 600; color: var(--muted); }
     .tab .ti { display: grid; place-items: center; height: 28px; }
     .tab .ti svg { width: 25px; height: 25px; }
-    .tab .tl { display: block; }
-    .tab .pill { display: none; }
     .tab.active { color: var(--accent); }
     .tab.active .ti { color: var(--accent); }
     .tab.active .ti svg { stroke-width: 2.1; }
@@ -323,77 +288,41 @@
 <div class="wrap">
 
   <div class="top">
-    <div class="brand">
-      <img class="logo" src="icon-192.png" alt="" width="48" height="48">
-      <div>
-        <h1>Uçot</h1>
-        <div class="sub">müştərilər və şəxsi xərclər · <span id="today"></span></div>
-      </div>
+    <img class="logo" src="icon-192.png" alt="" width="46" height="46">
+    <div>
+      <h1>Uçot</h1>
+      <div class="sub"><span id="today"></span></div>
     </div>
   </div>
 
   <div class="tabs" id="tabs">
-    <button class="tab active" data-tab="clients"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.1"/><path d="M2.8 19.2a6.2 6.2 0 0 1 12.4 0"/><path d="M16.5 5.3a3 3 0 0 1 0 5.6"/><path d="M17.7 19.2a6.2 6.2 0 0 0-2.4-4.9"/></svg></span><span class="tl">Müştərilər</span> <span class="pill">gəlir</span></button>
-    <button class="tab" data-tab="income"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.7v8.6"/><path d="M8.6 12.9 12 16.3l3.4-3.4"/></svg></span><span class="tl">Daxilolma</span> <span class="pill">birdəfəlik</span></button>
-    <button class="tab" data-tab="staff"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12.5" rx="2.4"/><path d="M8.3 7.5V6.2a2.2 2.2 0 0 1 2.2-2.2h3a2.2 2.2 0 0 1 2.2 2.2v1.3"/><path d="M3 12.4h18"/></svg></span><span class="tl">İşçilər</span> <span class="pill">−</span></button>
-    <button class="tab" data-tab="expenses"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.6h12v16.8l-2.2-1.4-2.3 1.4-2.3-1.4-2.2 1.4L6 20.4z"/><path d="M9 8h6M9 11.6h6M9 15.2h4"/></svg></span><span class="tl">Xərclər</span> <span class="pill">−</span></button>
+    <button class="tab active" data-tab="clients"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.1"/><path d="M2.8 19.2a6.2 6.2 0 0 1 12.4 0"/><path d="M16.5 5.3a3 3 0 0 1 0 5.6"/><path d="M17.7 19.2a6.2 6.2 0 0 0-2.4-4.9"/></svg></span><span class="tl">Müştərilər</span></button>
+    <button class="tab" data-tab="income"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.7v8.6"/><path d="M8.6 12.9 12 16.3l3.4-3.4"/></svg></span><span class="tl">Daxilolma</span></button>
+    <button class="tab" data-tab="staff"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12.5" rx="2.4"/><path d="M8.3 7.5V6.2a2.2 2.2 0 0 1 2.2-2.2h3a2.2 2.2 0 0 1 2.2 2.2v1.3"/><path d="M3 12.4h18"/></svg></span><span class="tl">İşçilər</span></button>
+    <button class="tab" data-tab="expenses"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.6h12v16.8l-2.2-1.4-2.3 1.4-2.3-1.4-2.2 1.4L6 20.4z"/><path d="M9 8h6M9 11.6h6M9 15.2h4"/></svg></span><span class="tl">Xərclər</span></button>
   </div>
 
-  <!-- ===== MÜŞTƏRİLƏR ===== -->
   <section id="view-clients">
-    <div class="summary cols3" id="summary"></div>
-
-    <form class="add" id="addForm" autocomplete="off">
-      <input class="grow" id="cName" placeholder="Müştəri / şirkət adı" required>
-      <input class="money num" id="cMonthly" type="number" min="0" step="1" placeholder="aylıq, ₼">
-      <input class="money num" id="cCost" type="number" min="0" step="1" placeholder="maya, ₼">
-      <input class="grow" id="cNoteIn" placeholder="qeyd (istəyə görə)" style="flex-basis:140px">
-      <button class="btn primary" type="submit">Müştəri əlavə et</button>
-    </form>
-
+    <div id="clientHero"></div>
+    <div class="sec">Müştərilər <span class="sec-c" id="clientCount"></span></div>
     <div id="list"></div>
   </section>
 
-  <!-- ===== DAXİLOLMA (birdəfəlik) ===== -->
   <section id="view-income" hidden>
-    <div class="summary cols3" id="incomeSummary"></div>
-
-    <form class="add" id="incomeForm" autocomplete="off">
-      <input class="grow" id="iName" placeholder="Müştəri adı" required>
-      <input class="money num" id="iTotal" type="number" min="0" step="1" placeholder="cəmi, ₼" required>
-      <input class="money num" id="iTaken" type="number" min="0" step="1" placeholder="alınıb, ₼">
-      <button class="btn primary" type="submit">Daxilolma əlavə et</button>
-    </form>
-
+    <div id="incomeHero"></div>
+    <div class="sec">Birdəfəlik daxilolmalar</div>
     <div id="incomeList"></div>
   </section>
 
-  <!-- ===== İŞÇİLƏR ===== -->
   <section id="view-staff" hidden>
-    <div class="summary cols3" id="staffSummary"></div>
-
-    <form class="add" id="staffForm" autocomplete="off">
-      <input class="grow" id="sName" placeholder="İşçi adı" required>
-      <input class="grow" id="sRole" placeholder="Vəzifə (fotoqraf, video, motion…)" style="flex-basis:190px">
-      <input class="grow" id="sNote" placeholder="qeyd" style="flex-basis:130px">
-      <button class="btn primary" type="submit">İşçi əlavə et</button>
-    </form>
-
+    <div id="staffHero"></div>
+    <div class="sec">İşçilər <span class="sec-c" id="staffCount"></span></div>
     <div id="staffList"></div>
   </section>
 
-  <!-- ===== XƏRCLƏR ===== -->
   <section id="view-expenses" hidden>
-    <div class="summary" id="expSummary"></div>
-
-    <form class="add" id="expForm" autocomplete="off">
-      <input class="grow" id="eTitle" placeholder="Haraya / nəyə" required>
-      <input class="money num" id="eAmount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
-      <input id="eDate" type="date" required>
-      <input class="grow" id="eNote" placeholder="şərh" style="flex-basis:140px">
-      <button class="btn primary" type="submit">Xərci yaz</button>
-    </form>
-
+    <div id="expHero"></div>
+    <div class="sec">Xərclər</div>
     <div id="expList"></div>
   </section>
 
@@ -406,15 +335,57 @@
 
 </div>
 
+<button class="fab" id="fab" aria-label="Əlavə et">+</button>
+
+<div class="sheet-backdrop" id="backdrop"></div>
+<div class="sheet" id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-title" id="sheetTitle">Yeni müştəri</div>
+
+  <form id="addForm" data-sheet="clients" autocomplete="off">
+    <input id="cName" placeholder="Müştəri / şirkət adı" required>
+    <input id="cMonthly" type="number" min="0" step="1" placeholder="aylıq ödəniş, ₼">
+    <input id="cCost" type="number" min="0" step="1" placeholder="aylıq maya, ₼">
+    <input id="cNoteIn" placeholder="qeyd (istəyə görə)">
+    <button class="btn primary" type="submit">Müştəri əlavə et</button>
+  </form>
+
+  <form id="incomeForm" data-sheet="income" autocomplete="off">
+    <input id="iName" placeholder="Müştəri adı" required>
+    <input id="iTotal" type="number" min="0" step="1" placeholder="cəmi məbləğ, ₼" required>
+    <input id="iTaken" type="number" min="0" step="1" placeholder="artıq alınıb, ₼">
+    <button class="btn primary" type="submit">Daxilolma əlavə et</button>
+  </form>
+
+  <form id="staffForm" data-sheet="staff" autocomplete="off">
+    <input id="sName" placeholder="İşçi adı" required>
+    <input id="sRole" placeholder="Vəzifə (fotoqraf, video, motion…)">
+    <input id="sNote" placeholder="qeyd (istəyə görə)">
+    <button class="btn primary" type="submit">İşçi əlavə et</button>
+  </form>
+
+  <form id="expForm" data-sheet="expenses" autocomplete="off">
+    <input id="eTitle" placeholder="Haraya / nəyə" required>
+    <input id="eAmount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
+    <input id="eDate" type="date" required>
+    <input id="eNote" placeholder="şərh (istəyə görə)">
+    <button class="btn primary" type="submit">Xərci yaz</button>
+  </form>
+</div>
+
 <script>
 "use strict";
 
 const KEY = "clients-tracker/v1";
 const $ = (s, r=document) => r.querySelector(s);
-const LOC = "az-AZ";
+
+const AZ_MONTHS = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avqust","sentyabr","oktyabr","noyabr","dekabr"];
+const AZ_MONTHS_SHORT = ["yan","fev","mar","apr","may","iyn","iyl","avq","sen","okt","noy","dek"];
+const CHEV = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>';
 
 /* ---------- state ---------- */
 let state = load();
+let activeTab = "clients";
 
 function load() {
   try {
@@ -430,20 +401,13 @@ function load() {
   } catch (e) {}
   return { clients: [], expenses: [], staff: [], incomes: [] };
 }
-function save() {
-  localStorage.setItem(KEY, JSON.stringify(state));
-}
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
 /* ---------- helpers ---------- */
-// Азербайджанские месяцы — хардкодом, чтобы не зависеть от ICU браузера/устройства.
-const AZ_MONTHS = ["yanvar","fevral","mart","aprel","may","iyun","iyul","avqust","sentyabr","oktyabr","noyabr","dekabr"];
-const AZ_MONTHS_SHORT = ["yan","fev","mar","apr","may","iyn","iyl","avq","sen","okt","noy","dek"];
-
-// Числа: разделитель тысяч — неразрывный пробел (1 800 ₼), одинаково везде.
-const groupNum = n => (String(Math.round(Math.abs(n)) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+const groupNum = n => (String(Math.round(Math.abs(n)) || 0)).replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 const fmt = n => groupNum(n) + " ₼";
-
+const signed = n => (n < 0 ? "−" : "") + fmt(Math.abs(n));
 const todayISO = () => new Date().toISOString().slice(0, 10);
 const monthKey = iso => (iso || "").slice(0, 7);
 const nowMonth = () => todayISO().slice(0, 7);
@@ -484,82 +448,63 @@ const incomeTotalAll = () => state.incomes.reduce((s, i) => s + (i.total || 0), 
 const incomeTakenAll = () => state.incomes.reduce((s, i) => s + (i.taken || 0), 0);
 const incomeLeftAll = () => state.incomes.reduce((s, i) => s + incomeLeft(i), 0);
 
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
+}
+function avatarHTML(name) {
+  const s = String(name || "");
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+  const letter = (s.trim()[0] || "?").toUpperCase();
+  return `<span class="ava" style="--h:${h % 360}">${escapeHtml(letter)}</span>`;
+}
+function hero(label, value) {
+  return `<div class="hero"><div class="hk">${label}</div><div class="hv num">${value}</div></div>`;
+}
+function mini(label, value, cls) {
+  return `<div class="mini"><div class="mk">${label}</div><div class="mv num ${cls||""}">${value}</div></div>`;
+}
+
 /* ---------- render ---------- */
 function render() {
   $("#today").textContent = fmtToday();
-  renderClientSummary();
-  renderList();
-  renderIncomeSummary();
-  renderIncomeList();
-  renderStaffSummary();
-  renderStaffList();
-  renderExpSummary();
-  renderExpList();
+  renderClients();
+  renderIncome();
+  renderStaff();
+  renderExpenses();
   save();
 }
 
-function statCard(k, v, cls) {
-  return `<div class="stat ${cls||""}"><div class="k">${k}</div><div class="v num">${v}</div></div>`;
-}
-
-function renderClientSummary() {
+/* ---- müştərilər ---- */
+function renderClients() {
   const active = state.clients.filter(c => !c.paused);
   const expected = active.reduce((s, c) => s + (c.monthly || 0), 0);
   const cost = active.reduce((s, c) => s + (c.cost || 0), 0);
-  const profit = expected - cost;
   const got = active.reduce((s, c) => s + paidThisMonth(c), 0);
   const remain = active.reduce((s, c) => s + monthRemaining(c), 0);
-  const cnt = state.clients.length + (state.clients.some(c => c.paused) ? ` · ${active.length} aktiv` : "");
 
-  $("#summary").innerHTML =
-    statCard("Aylıq gözlənilən", fmt(expected), "accent") +
-    statCard("Aylıq maya", fmt(cost), "warn") +
-    statCard("Aylıq xalis mənfəət", (profit < 0 ? "−" : "") + fmt(Math.abs(profit)), profit < 0 ? "red" : "good") +
-    statCard("Bu ay alınan", fmt(got), "good") +
-    statCard("Ay üzrə qalıq", fmt(remain), remain > 0 ? "warn" : "good") +
-    statCard("Müştərilər", cnt);
-}
+  $("#clientHero").innerHTML =
+    hero("Aylıq xalis mənfəət", signed(expected - cost)) +
+    `<div class="mini-row">${mini("Gözlənilən", fmt(expected))}${mini("Bu ay alınan", fmt(got), "good")}${mini("Qalıq", fmt(remain), remain > 0 ? "warn" : "good")}</div>`;
+  $("#clientCount").textContent = state.clients.length || "";
 
-function renderExpSummary() {
-  const got = gotThisMonth();
-  const spent = spentThisMonth();
-  const balance = got - spent;
-  $("#expSummary").innerHTML =
-    statCard("Bu ay xərclənən", fmt(spent), "red") +
-    statCard("Bu ay alınan", fmt(got), "good") +
-    statCard("Ay balansı", (balance < 0 ? "−" : "") + fmt(Math.abs(balance)), balance < 0 ? "red" : "good") +
-    statCard("Cəmi xərclənən", fmt(spentTotal()));
-}
-
-function renderList() {
   const list = $("#list");
   if (state.clients.length === 0) {
-    list.innerHTML = `<div class="empty">Hələ müştəri yoxdur.<br>Yuxarıdakı formada əlavə edin.</div>`;
+    list.innerHTML = `<div class="empty">Hələ müştəri yoxdur.<br>Aşağıdakı «+» düyməsi ilə əlavə edin.</div>`;
     return;
   }
   const sorted = [...state.clients].sort((a, b) =>
-    (a.paused === b.paused) ? a.name.localeCompare(b.name, "az") : (a.paused ? 1 : -1)
-  );
-  list.innerHTML = sorted.map(clientHTML).join("");
+    (a.paused === b.paused) ? a.name.localeCompare(b.name, "az") : (a.paused ? 1 : -1));
+  list.innerHTML = `<div class="rows">${sorted.map(clientRow).join("")}</div>`;
 }
 
-function clientHTML(c) {
+function clientRow(c) {
   const got = paidThisMonth(c);
   const rem = monthRemaining(c);
   const total = totalPaid(c);
   const cost = c.cost || 0;
   const profit = (c.monthly || 0) - cost;
-  const monthPaid = c.monthly > 0 && rem === 0 && got > 0;
-
-  const monthBadge = c.monthly > 0
-    ? (monthPaid
-        ? `<span class="badge good"><span class="bl">bu ay</span><b>ödənilib</b></span>`
-        : `<span class="badge warn"><span class="bl">ay üzrə qalıq</span><b class="num">${fmt(rem)}</b></span>`)
-    : "";
-
-  const profitBadge = (c.monthly || cost)
-    ? `<span class="badge ${profit < 0 ? "red" : "good"}"><span class="bl">mənfəət/ay</span><b class="num">${(profit < 0 ? "−" : "") + fmt(Math.abs(profit))}</b></span>`
-    : "";
+  const sub = [c.monthly > 0 ? `aylıq ${fmt(c.monthly)}` : null, `bu ay ${fmt(got)}`].filter(Boolean).join(" · ");
 
   const pays = c.payments.slice().sort((a, b) => b.date.localeCompare(a.date));
   const paysRows = pays.length
@@ -567,145 +512,101 @@ function clientHTML(c) {
         <td class="dt num">${fmtDate(p.date)}</td>
         <td class="pn">${p.note ? escapeHtml(p.note) : ""}</td>
         <td class="amt num">${fmt(p.amount)}</td>
-        <td class="del"><button class="btn ghost tiny" data-act="delpay" data-c="${c.id}" data-p="${p.id}" title="Ödənişi sil">✕</button></td>
+        <td class="del"><button class="btn ico" data-act="delpay" data-c="${c.id}" data-p="${p.id}" title="Sil">✕</button></td>
       </tr>`).join("")
     : `<tr><td colspan="4" class="empty-pays">Hələ ödəniş olmayıb.</td></tr>`;
 
   return `
-  <div class="client ${c.open ? "open" : ""} ${c.paused ? "paused" : ""}">
-    <div class="chead">
-      <div class="chead-main">
-        ${avatarHTML(c.name)}
-        <div class="cinfo">
-          <div class="cname">
-            ${escapeHtml(c.name)}
-            ${c.paused ? `<span class="tag paused">pauzada</span>` : ""}
-          </div>
-          <div class="cmeta">
-            ${c.monthly > 0 ? `<b class="num">${fmt(c.monthly)}</b> aylıq · ` : ""}${cost > 0 ? `maya <b class="num">${fmt(cost)}</b> · ` : ""}bu ay alınan <b class="num">${fmt(got)}</b>
-          </div>
-          ${c.note ? `<div class="cnote">${escapeHtml(c.note)}</div>` : ""}
-        </div>
+  <div class="row ${c.open ? "open" : ""} ${c.paused ? "paused" : ""}">
+    <div class="row-head" data-act="toggle" data-c="${c.id}">
+      ${avatarHTML(c.name)}
+      <div class="row-mid">
+        <div class="row-title"><span class="nm">${escapeHtml(c.name)}</span>${c.paused ? `<span class="tag paused">pauza</span>` : ""}</div>
+        <div class="row-sub">${sub}</div>
       </div>
-      <div class="cactions">
-        <button class="btn ghost tiny" data-act="toggle" data-c="${c.id}">${c.open ? "Bağla" : "Ödənişlər"}</button>
-        <button class="btn ghost tiny" data-act="edit" data-c="${c.id}">Düzəliş</button>
-        <button class="btn ghost tiny" data-act="pause" data-c="${c.id}">${c.paused ? "Davam et" : "Pauza"}</button>
-        <button class="btn ghost tiny danger" data-act="delclient" data-c="${c.id}">Sil</button>
+      <div class="row-end">
+        ${(c.monthly || cost) ? `<div class="row-val ${profit < 0 ? "red" : "good"}">${signed(profit)}</div><div class="row-vsub">mənfəət/ay</div>` : ""}
       </div>
+      <span class="chev">${CHEV}</span>
     </div>
-
-    <div class="cbadges">
-      ${monthBadge}
-      ${profitBadge}
-      <span class="badge flat"><span class="bl">cəmi ödənilib</span><b class="num">${fmt(total)}</b></span>
-      <span class="badge flat"><span class="bl">ödəniş</span><b class="num">${c.payments.length}</b></span>
-    </div>
-
-    <div class="cbody">
+    <div class="row-body">
+      <div class="badges">
+        ${cost > 0 ? `<span class="badge"><span class="bl">maya</span><b class="num">${fmt(cost)}</b></span>` : ""}
+        ${c.monthly > 0 ? `<span class="badge ${rem === 0 && got > 0 ? "good" : "warn"}"><span class="bl">${rem === 0 && got > 0 ? "bu ay" : "qalıq"}</span><b class="num">${rem === 0 && got > 0 ? "ödənilib" : fmt(rem)}</b></span>` : ""}
+        <span class="badge"><span class="bl">cəmi ödənilib</span><b class="num">${fmt(total)}</b></span>
+        <span class="badge"><span class="bl">ödəniş</span><b class="num">${c.payments.length}</b></span>
+      </div>
       <form class="payadd" data-act="addpay" data-c="${c.id}">
-        <input class="money num" name="amount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
+        <input class="num" name="amount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
         <input type="date" name="date" value="${todayISO()}" required>
-        <input class="pnote" name="note" placeholder="şərh (istəyə görə)">
-        <button class="btn primary tiny" type="submit">Ödənişi yaz</button>
+        <input name="note" placeholder="şərh (istəyə görə)">
+        <button class="btn primary" type="submit">Ödənişi yaz</button>
       </form>
       <table class="pays"><tbody>${paysRows}</tbody></table>
+      <div class="row-actions">
+        <button class="btn" data-act="edit" data-c="${c.id}">Düzəliş</button>
+        <button class="btn" data-act="pause" data-c="${c.id}">${c.paused ? "Davam et" : "Pauza"}</button>
+        <button class="btn danger" data-act="delclient" data-c="${c.id}">Sil</button>
+      </div>
     </div>
   </div>`;
 }
 
-function renderExpList() {
-  const list = $("#expList");
-  if (state.expenses.length === 0) {
-    list.innerHTML = `<div class="empty">Hələ xərc yoxdur.<br>Yuxarıdakı formada yazın.</div>`;
-    return;
-  }
-  const byMonth = {};
-  for (const e of state.expenses) {
-    const mk = monthKey(e.date) || "—";
-    (byMonth[mk] ||= []).push(e);
-  }
-  const months = Object.keys(byMonth).sort((a, b) => b.localeCompare(a));
-
-  list.innerHTML = months.map(mk => {
-    const items = byMonth[mk].sort((a, b) => b.date.localeCompare(a.date));
-    const sum = items.reduce((s, e) => s + e.amount, 0);
-    const rows = items.map(e => `<tr>
-        <td class="dt num">${fmtDate(e.date)}</td>
-        <td class="ti">${escapeHtml(e.title)}${e.note ? `<div class="en">${escapeHtml(e.note)}</div>` : ""}</td>
-        <td class="amt num">−${fmt(e.amount)}</td>
-        <td class="del"><button class="btn ghost tiny" data-act="delexp" data-e="${e.id}" title="Xərci sil">✕</button></td>
-      </tr>`).join("");
-    return `<div class="exp-card" style="margin-bottom:14px">
-      <div class="exp-group-h"><span>${fmtMonthTitle(mk)}</span><span class="sum num">${fmt(sum)}</span></div>
-      <table class="exp"><tbody>${rows}</tbody></table>
-    </div>`;
-  }).join("");
-}
-
-/* ---------- daxilolma: рендер ---------- */
-function renderIncomeSummary() {
+/* ---- daxilolma ---- */
+function renderIncome() {
   const left = incomeLeftAll();
-  $("#incomeSummary").innerHTML =
-    statCard("Alınmalı", fmt(incomeTotalAll()), "accent") +
-    statCard("Alınıb", fmt(incomeTakenAll()), "good") +
-    statCard("Qalıq", fmt(left), left > 0 ? "warn" : "good");
-}
+  $("#incomeHero").innerHTML =
+    hero("Alınmalı qalıq", fmt(left)) +
+    `<div class="mini-row">${mini("Alınmalı", fmt(incomeTotalAll()))}${mini("Alınıb", fmt(incomeTakenAll()), "good")}</div>`;
 
-function renderIncomeList() {
   const list = $("#incomeList");
   if (state.incomes.length === 0) {
-    list.innerHTML = `<div class="empty">Hələ birdəfəlik daxilolma yoxdur.<br>Yuxarıdakı formada əlavə edin.</div>`;
+    list.innerHTML = `<div class="empty">Hələ birdəfəlik daxilolma yoxdur.<br>Aşağıdakı «+» düyməsi ilə əlavə edin.</div>`;
     return;
   }
-  list.innerHTML = state.incomes.map(incomeHTML).join("");
+  list.innerHTML = `<div class="rows">${state.incomes.map(incomeRow).join("")}</div>`;
 }
 
-function incomeHTML(inc) {
+function incomeRow(inc) {
   const rem = incomeLeft(inc);
   const done = (inc.total || 0) > 0 && rem === 0;
   return `
-  <div class="client">
-    <div class="chead">
-      <div class="chead-main" style="flex:1 1 auto; min-width:0;">
-        ${avatarHTML(inc.name)}
-        <div style="flex:1; min-width:0;">
-          <input class="inc-name" value="${escapeHtml(inc.name)}" data-i="${inc.id}" data-f="name" placeholder="Müştəri adı">
-          <div class="inc-fields">
-            <label>alınıb <input class="num" type="number" min="0" step="1" value="${inc.taken || 0}" data-i="${inc.id}" data-f="taken"></label>
-            <label>cəmi <input class="num" type="number" min="0" step="1" value="${inc.total || 0}" data-i="${inc.id}" data-f="total"></label>
-          </div>
+  <div class="row">
+    <div class="row-head static">
+      ${avatarHTML(inc.name)}
+      <div class="row-mid">
+        <input class="inc-name" value="${escapeHtml(inc.name)}" data-i="${inc.id}" data-f="name" placeholder="Müştəri adı">
+        <div class="inc-fields">
+          <label>alınıb <input class="num" type="number" min="0" step="1" value="${inc.taken || 0}" data-i="${inc.id}" data-f="taken"></label>
+          <label>cəmi <input class="num" type="number" min="0" step="1" value="${inc.total || 0}" data-i="${inc.id}" data-f="total"></label>
         </div>
       </div>
-      <div class="cactions">
-        <button class="btn ghost tiny danger" data-act="delincome" data-i="${inc.id}">Sil</button>
+      <div class="row-end">
+        <div class="row-val ${done ? "good" : "warn"} inc-left">${done ? "bağlandı" : fmt(rem)}</div>
+        <div class="row-vsub inc-lbl">${done ? "status" : "qalıq"}</div>
       </div>
-    </div>
-    <div class="cbadges">
-      <span class="badge ${done ? "good" : "warn"}"><span class="bl">${done ? "status" : "qalıq"}</span><b class="inc-left num">${done ? "bağlandı" : fmt(rem)}</b></span>
+      <button class="btn ico" data-act="delincome" data-i="${inc.id}" title="Sil">✕</button>
     </div>
   </div>`;
 }
 
-/* ---------- işçilər: рендер ---------- */
-function renderStaffSummary() {
-  $("#staffSummary").innerHTML =
-    statCard("Bu ay ödənilən", fmt(staffMonthAll()), "red") +
-    statCard("Cəmi ödənilən", fmt(staffAll())) +
-    statCard("İşçilər", state.staff.length);
-}
+/* ---- işçilər ---- */
+function renderStaff() {
+  $("#staffHero").innerHTML =
+    hero("Bu ay ödənilən", fmt(staffMonthAll())) +
+    `<div class="mini-row">${mini("Cəmi ödənilən", fmt(staffAll()))}${mini("İşçi sayı", String(state.staff.length))}</div>`;
+  $("#staffCount").textContent = state.staff.length || "";
 
-function renderStaffList() {
   const list = $("#staffList");
   if (state.staff.length === 0) {
-    list.innerHTML = `<div class="empty">Hələ işçi yoxdur.<br>Yuxarıdakı formada əlavə edin.</div>`;
+    list.innerHTML = `<div class="empty">Hələ işçi yoxdur.<br>Aşağıdakı «+» düyməsi ilə əlavə edin.</div>`;
     return;
   }
   const sorted = [...state.staff].sort((a, b) => a.name.localeCompare(b.name, "az"));
-  list.innerHTML = sorted.map(staffHTML).join("");
+  list.innerHTML = `<div class="rows">${sorted.map(staffRow).join("")}</div>`;
 }
 
-function staffHTML(m) {
+function staffRow(m) {
   const got = staffPaidThisMonth(m);
   const total = staffTotal(m);
   const pays = m.payments.slice().sort((a, b) => b.date.localeCompare(a.date));
@@ -714,74 +615,106 @@ function staffHTML(m) {
         <td class="dt num">${fmtDate(p.date)}</td>
         <td class="pn">${p.note ? escapeHtml(p.note) : ""}</td>
         <td class="amt num">−${fmt(p.amount)}</td>
-        <td class="del"><button class="btn ghost tiny" data-act="delpay" data-m="${m.id}" data-p="${p.id}" title="Ödənişi sil">✕</button></td>
+        <td class="del"><button class="btn ico" data-act="delpay" data-m="${m.id}" data-p="${p.id}" title="Sil">✕</button></td>
       </tr>`).join("")
     : `<tr><td colspan="4" class="empty-pays">Hələ ödəniş olmayıb.</td></tr>`;
 
   return `
-  <div class="client ${m.open ? "open" : ""}">
-    <div class="chead">
-      <div class="chead-main">
-        ${avatarHTML(m.name)}
-        <div class="cinfo">
-          <div class="cname">
-            ${escapeHtml(m.name)}
-            ${m.role ? `<span class="tag paused">${escapeHtml(m.role)}</span>` : ""}
-          </div>
-          <div class="cmeta">bu ay ödənilən <b class="num">${fmt(got)}</b></div>
-          ${m.note ? `<div class="cnote">${escapeHtml(m.note)}</div>` : ""}
-        </div>
+  <div class="row ${m.open ? "open" : ""}">
+    <div class="row-head" data-act="toggle" data-m="${m.id}">
+      ${avatarHTML(m.name)}
+      <div class="row-mid">
+        <div class="row-title"><span class="nm">${escapeHtml(m.name)}</span>${m.role ? `<span class="tag">${escapeHtml(m.role)}</span>` : ""}</div>
+        <div class="row-sub">bu ay ${fmt(got)} · cəmi ${fmt(total)}</div>
       </div>
-      <div class="cactions">
-        <button class="btn ghost tiny" data-act="toggle" data-m="${m.id}">${m.open ? "Bağla" : "Ödənişlər"}</button>
-        <button class="btn ghost tiny" data-act="edit" data-m="${m.id}">Düzəliş</button>
-        <button class="btn ghost tiny danger" data-act="delstaff" data-m="${m.id}">Sil</button>
+      <div class="row-end">
+        <div class="row-val">${fmt(got)}</div>
+        <div class="row-vsub">bu ay</div>
       </div>
+      <span class="chev">${CHEV}</span>
     </div>
-
-    <div class="cbadges">
-      <span class="badge flat"><span class="bl">cəmi ödənilən</span><b class="num">${fmt(total)}</b></span>
-      <span class="badge flat"><span class="bl">ödəniş</span><b class="num">${m.payments.length}</b></span>
-    </div>
-
-    <div class="cbody">
+    <div class="row-body">
       <form class="payadd" data-act="addpay" data-m="${m.id}">
-        <input class="money num" name="amount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
+        <input class="num" name="amount" type="number" min="0" step="1" placeholder="məbləğ, ₼" required>
         <input type="date" name="date" value="${todayISO()}" required>
-        <input class="pnote" name="note" placeholder="nəyə görə (istəyə görə)">
-        <button class="btn primary tiny" type="submit">Ödənişi yaz</button>
+        <input name="note" placeholder="nəyə görə (istəyə görə)">
+        <button class="btn primary" type="submit">Ödənişi yaz</button>
       </form>
       <table class="pays"><tbody>${paysRows}</tbody></table>
+      <div class="row-actions">
+        <button class="btn" data-act="edit" data-m="${m.id}">Düzəliş</button>
+        <button class="btn danger" data-act="delstaff" data-m="${m.id}">Sil</button>
+      </div>
     </div>
   </div>`;
 }
 
-function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, m => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[m]));
-}
+/* ---- xərclər ---- */
+function renderExpenses() {
+  const got = gotThisMonth();
+  const spent = spentThisMonth();
+  $("#expHero").innerHTML =
+    hero("Ay balansı", signed(got - spent)) +
+    `<div class="mini-row">${mini("Bu ay xərclənən", fmt(spent), "red")}${mini("Bu ay alınan", fmt(got), "good")}${mini("Cəmi xərclənən", fmt(spentTotal()))}</div>`;
 
-// Круглый аватар с инициалом — цвет из имени.
-function avatarHTML(name) {
-  const s = String(name || "");
-  let h = 0;
-  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-  const letter = (s.trim()[0] || "?").toUpperCase();
-  return `<span class="ava" style="--h:${h % 360}">${escapeHtml(letter)}</span>`;
+  const list = $("#expList");
+  if (state.expenses.length === 0) {
+    list.innerHTML = `<div class="empty">Hələ xərc yoxdur.<br>Aşağıdakı «+» düyməsi ilə yazın.</div>`;
+    return;
+  }
+  const byMonth = {};
+  for (const e of state.expenses) { const mk = monthKey(e.date) || "—"; (byMonth[mk] ||= []).push(e); }
+  const months = Object.keys(byMonth).sort((a, b) => b.localeCompare(a));
+
+  list.innerHTML = months.map(mk => {
+    const items = byMonth[mk].sort((a, b) => b.date.localeCompare(a.date));
+    const sum = items.reduce((s, e) => s + e.amount, 0);
+    const rows = items.map(e => `
+      <div class="row">
+        <div class="row-head static">
+          ${avatarHTML(e.title)}
+          <div class="row-mid">
+            <div class="row-title"><span class="nm">${escapeHtml(e.title)}</span></div>
+            <div class="row-sub">${fmtDate(e.date)}${e.note ? " · " + escapeHtml(e.note) : ""}</div>
+          </div>
+          <div class="row-end"><div class="row-val red">−${fmt(e.amount)}</div></div>
+          <button class="btn ico" data-act="delexp" data-e="${e.id}" title="Sil">✕</button>
+        </div>
+      </div>`).join("");
+    return `<div class="sec" style="margin-top:2px">${fmtMonthTitle(mk)} <span class="sec-c num">${fmt(sum)}</span></div><div class="rows">${rows}</div>`;
+  }).join("");
 }
 
 /* ---------- tabs ---------- */
 $("#tabs").addEventListener("click", e => {
   const t = e.target.closest(".tab");
   if (!t) return;
-  const tab = t.dataset.tab;
+  activeTab = t.dataset.tab;
   document.querySelectorAll(".tab").forEach(b => b.classList.toggle("active", b === t));
-  $("#view-clients").hidden = tab !== "clients";
-  $("#view-income").hidden = tab !== "income";
-  $("#view-staff").hidden = tab !== "staff";
-  $("#view-expenses").hidden = tab !== "expenses";
+  $("#view-clients").hidden = activeTab !== "clients";
+  $("#view-income").hidden = activeTab !== "income";
+  $("#view-staff").hidden = activeTab !== "staff";
+  $("#view-expenses").hidden = activeTab !== "expenses";
 });
 
-/* ---------- удаление в два нажатия (без системного окна) ---------- */
+/* ---------- bottom sheet (add) ---------- */
+const SHEET_TITLES = { clients: "Yeni müştəri", income: "Yeni daxilolma", staff: "Yeni işçi", expenses: "Yeni xərc" };
+function openSheet() {
+  $("#sheetTitle").textContent = SHEET_TITLES[activeTab];
+  document.querySelectorAll(".sheet form").forEach(f => f.classList.toggle("on", f.dataset.sheet === activeTab));
+  $("#sheet").classList.add("open");
+  $("#backdrop").classList.add("open");
+  const first = $(`.sheet form.on input`);
+  if (first) setTimeout(() => first.focus(), 250);
+}
+function closeSheet() {
+  $("#sheet").classList.remove("open");
+  $("#backdrop").classList.remove("open");
+}
+$("#fab").addEventListener("click", openSheet);
+$("#backdrop").addEventListener("click", closeSheet);
+
+/* ---------- удаление в два нажатия ---------- */
 function armedDelete(btn, onConfirm) {
   if (btn.dataset.armed === "1") { onConfirm(); return; }
   btn.dataset.armed = "1";
@@ -807,30 +740,20 @@ $("#addForm").addEventListener("submit", e => {
   const monthly = Math.max(0, Number($("#cMonthly").value) || 0);
   const cost = Math.max(0, Number($("#cCost").value) || 0);
   const note = $("#cNoteIn").value.trim();
-  state.clients.push({ id: uid(), name, monthly, cost, note, paused: false, open: true, payments: [] });
-  e.target.reset();
-  render();
+  state.clients.push({ id: uid(), name, monthly, cost, note, paused: false, open: false, payments: [] });
+  e.target.reset(); closeSheet(); render();
 });
 
 $("#list").addEventListener("click", e => {
-  const btn = e.target.closest("button[data-act]");
+  const btn = e.target.closest("[data-act]");
   if (!btn) return;
   const c = getClient(btn.dataset.c);
   if (!c) return;
   const act = btn.dataset.act;
-
   if (act === "toggle") { c.open = !c.open; render(); }
   else if (act === "pause") { c.paused = !c.paused; render(); }
-  else if (act === "delclient") {
-    armedDelete(btn, () => {
-      state.clients = state.clients.filter(x => x.id !== c.id);
-      render();
-    });
-  }
-  else if (act === "delpay") {
-    c.payments = c.payments.filter(p => p.id !== btn.dataset.p);
-    render();
-  }
+  else if (act === "delclient") armedDelete(btn, () => { state.clients = state.clients.filter(x => x.id !== c.id); render(); });
+  else if (act === "delpay") { c.payments = c.payments.filter(p => p.id !== btn.dataset.p); render(); }
   else if (act === "edit") editClient(c);
 });
 
@@ -842,22 +765,15 @@ $("#list").addEventListener("submit", e => {
   if (!c) return;
   const amount = Math.max(0, Number(form.amount.value) || 0);
   if (!amount) return;
-  const date = form.date.value || todayISO();
-  const note = form.note.value.trim();
-  c.payments.push({ id: uid(), amount, date, note });
-  c.open = true;
-  render();
+  c.payments.push({ id: uid(), amount, date: form.date.value || todayISO(), note: form.note.value.trim() });
+  c.open = true; render();
 });
 
 function editClient(c) {
-  const name = prompt("Müştəri / şirkət adı:", c.name);
-  if (name === null) return;
-  const monthly = prompt("Aylıq ödəniş, ₼ (yoxdursa 0):", c.monthly || 0);
-  if (monthly === null) return;
-  const cost = prompt("Aylıq maya, ₼ (yoxdursa 0):", c.cost || 0);
-  if (cost === null) return;
-  const note = prompt("Qeyd:", c.note || "");
-  if (note === null) return;
+  const name = prompt("Müştəri / şirkət adı:", c.name); if (name === null) return;
+  const monthly = prompt("Aylıq ödəniş, ₼ (yoxdursa 0):", c.monthly || 0); if (monthly === null) return;
+  const cost = prompt("Aylıq maya, ₼ (yoxdursa 0):", c.cost || 0); if (cost === null) return;
+  const note = prompt("Qeyd:", c.note || ""); if (note === null) return;
   c.name = name.trim() || c.name;
   c.monthly = Math.max(0, Number(monthly) || 0);
   c.cost = Math.max(0, Number(cost) || 0);
@@ -867,22 +783,18 @@ function editClient(c) {
 
 /* ---------- xərclər: actions ---------- */
 $("#eDate").value = todayISO();
-
 $("#expForm").addEventListener("submit", e => {
   e.preventDefault();
   const title = $("#eTitle").value.trim();
   const amount = Math.max(0, Number($("#eAmount").value) || 0);
   if (!title || !amount) return;
   const date = $("#eDate").value || todayISO();
-  const note = $("#eNote").value.trim();
-  state.expenses.push({ id: uid(), title, amount, date, note });
-  $("#eTitle").value = ""; $("#eAmount").value = ""; $("#eNote").value = "";
-  $("#eDate").value = date;
-  render();
+  state.expenses.push({ id: uid(), title, amount, date, note: $("#eNote").value.trim() });
+  $("#eTitle").value = ""; $("#eAmount").value = ""; $("#eNote").value = ""; $("#eDate").value = date;
+  closeSheet(); render();
 });
-
 $("#expList").addEventListener("click", e => {
-  const btn = e.target.closest("button[data-act='delexp']");
+  const btn = e.target.closest("[data-act='delexp']");
   if (!btn) return;
   state.expenses = state.expenses.filter(x => x.id !== btn.dataset.e);
   render();
@@ -895,31 +807,19 @@ $("#staffForm").addEventListener("submit", e => {
   e.preventDefault();
   const name = $("#sName").value.trim();
   if (!name) return;
-  const role = $("#sRole").value.trim();
-  const note = $("#sNote").value.trim();
-  state.staff.push({ id: uid(), name, role, note, open: true, payments: [] });
-  e.target.reset();
-  render();
+  state.staff.push({ id: uid(), name, role: $("#sRole").value.trim(), note: $("#sNote").value.trim(), open: false, payments: [] });
+  e.target.reset(); closeSheet(); render();
 });
 
 $("#staffList").addEventListener("click", e => {
-  const btn = e.target.closest("button[data-act]");
+  const btn = e.target.closest("[data-act]");
   if (!btn) return;
   const m = getStaff(btn.dataset.m);
   if (!m) return;
   const act = btn.dataset.act;
-
   if (act === "toggle") { m.open = !m.open; render(); }
-  else if (act === "delstaff") {
-    armedDelete(btn, () => {
-      state.staff = state.staff.filter(x => x.id !== m.id);
-      render();
-    });
-  }
-  else if (act === "delpay") {
-    m.payments = m.payments.filter(p => p.id !== btn.dataset.p);
-    render();
-  }
+  else if (act === "delstaff") armedDelete(btn, () => { state.staff = state.staff.filter(x => x.id !== m.id); render(); });
+  else if (act === "delpay") { m.payments = m.payments.filter(p => p.id !== btn.dataset.p); render(); }
   else if (act === "edit") editStaff(m);
 });
 
@@ -931,23 +831,15 @@ $("#staffList").addEventListener("submit", e => {
   if (!m) return;
   const amount = Math.max(0, Number(form.amount.value) || 0);
   if (!amount) return;
-  const date = form.date.value || todayISO();
-  const note = form.note.value.trim();
-  m.payments.push({ id: uid(), amount, date, note });
-  m.open = true;
-  render();
+  m.payments.push({ id: uid(), amount, date: form.date.value || todayISO(), note: form.note.value.trim() });
+  m.open = true; render();
 });
 
 function editStaff(m) {
-  const name = prompt("İşçi adı:", m.name);
-  if (name === null) return;
-  const role = prompt("Vəzifə:", m.role || "");
-  if (role === null) return;
-  const note = prompt("Qeyd:", m.note || "");
-  if (note === null) return;
-  m.name = name.trim() || m.name;
-  m.role = role.trim();
-  m.note = note.trim();
+  const name = prompt("İşçi adı:", m.name); if (name === null) return;
+  const role = prompt("Vəzifə:", m.role || ""); if (role === null) return;
+  const note = prompt("Qeyd:", m.note || ""); if (note === null) return;
+  m.name = name.trim() || m.name; m.role = role.trim(); m.note = note.trim();
   render();
 }
 
@@ -959,11 +851,10 @@ $("#incomeForm").addEventListener("submit", e => {
   const total = Math.max(0, Number($("#iTotal").value) || 0);
   const taken = Math.max(0, Number($("#iTaken").value) || 0);
   state.incomes.push({ id: uid(), name, total, taken });
-  e.target.reset();
-  render();
+  e.target.reset(); closeSheet(); render();
 });
 
-// Инлайн-правки: имя/alınıb/cəmi меняются прямо в карточке, без всплывающих окон.
+// Инлайн-правки прямо в строке — без перерендера, чтобы не терять фокус.
 $("#incomeList").addEventListener("input", e => {
   const el = e.target;
   const id = el.dataset.i, f = el.dataset.f;
@@ -973,25 +864,26 @@ $("#incomeList").addEventListener("input", e => {
   if (f === "name") inc.name = el.value;
   else inc[f] = Math.max(0, Number(el.value) || 0);
 
-  const badge = el.closest(".client").querySelector(".inc-left");
-  if (badge) {
-    const rem = incomeLeft(inc);
-    const done = (inc.total || 0) > 0 && rem === 0;
-    badge.textContent = done ? "bağlandı" : fmt(rem);
-    badge.previousElementSibling.textContent = done ? "status" : "qalıq";
-    badge.closest(".badge").className = "badge " + (done ? "good" : "warn");
-  }
-  renderIncomeSummary();
+  const row = el.closest(".row");
+  const rem = incomeLeft(inc);
+  const done = (inc.total || 0) > 0 && rem === 0;
+  const vEl = row.querySelector(".inc-left"), lEl = row.querySelector(".inc-lbl");
+  if (vEl) { vEl.textContent = done ? "bağlandı" : fmt(rem); vEl.className = "row-val inc-left " + (done ? "good" : "warn"); }
+  if (lEl) lEl.textContent = done ? "status" : "qalıq";
+  renderIncome_heroOnly();
   save();
 });
+function renderIncome_heroOnly() {
+  const left = incomeLeftAll();
+  $("#incomeHero").innerHTML =
+    hero("Alınmalı qalıq", fmt(left)) +
+    `<div class="mini-row">${mini("Alınmalı", fmt(incomeTotalAll()))}${mini("Alınıb", fmt(incomeTakenAll()), "good")}</div>`;
+}
 
 $("#incomeList").addEventListener("click", e => {
-  const btn = e.target.closest("button[data-act='delincome']");
+  const btn = e.target.closest("[data-act='delincome']");
   if (!btn) return;
-  armedDelete(btn, () => {
-    state.incomes = state.incomes.filter(x => x.id !== btn.dataset.i);
-    render();
-  });
+  armedDelete(btn, () => { state.incomes = state.incomes.filter(x => x.id !== btn.dataset.i); render(); });
 });
 
 /* ---------- backup ---------- */
@@ -1016,8 +908,7 @@ $("#importFile").addEventListener("change", e => {
       if (!Array.isArray(data.staff)) data.staff = [];
       if (!Array.isArray(data.incomes)) data.incomes = [];
       if (!confirm("Cari məlumatlar faylla əvəz olunsun?")) return;
-      state = data;
-      render();
+      state = data; render();
     } catch (err) {
       alert("Fayl oxunmadı: bu, ehtiyat nüsxəyə oxşamır.");
     }
@@ -1028,11 +919,8 @@ $("#importFile").addEventListener("change", e => {
 
 render();
 
-/* ---------- офлайн-режим (PWA) ---------- */
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
-  });
+  window.addEventListener("load", () => navigator.serviceWorker.register("sw.js").catch(() => {}));
 }
 </script>
 </body>
