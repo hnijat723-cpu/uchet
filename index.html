@@ -7,8 +7,8 @@
 
 <!-- PWA: устанавливается на главный экран, работает офлайн -->
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#f6f7f9" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0e0f12" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#eef1f7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#080c14" media="(prefers-color-scheme: dark)">
 <!-- iPhone (Safari «На экран Домой») -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -18,48 +18,60 @@
 
 <style>
   :root {
-    --bg: #f6f7f9;
+    --bg: #eef1f7;
     --card: #ffffff;
-    --ink: #14161a;
-    --muted: #6b7280;
-    --muted-2: #9aa1ac;
-    --line: #e6e8ec;
-    --line-2: #eef0f3;
-    --accent: #2f6bff;
-    --accent-soft: #eaf0ff;
-    --good: #17936a;
-    --good-soft: #e6f5ef;
+    --ink: #0c111c;
+    --muted: #5a6473;
+    --muted-2: #97a0af;
+    --line: #e3e8f0;
+    --line-2: #eef1f7;
+    --accent: #0d9488;
+    --accent-2: #06b6d4;
+    --grad: linear-gradient(135deg, #10b8a6, #22d3ee);
+    --glow: rgba(13,148,136,.28);
+    --ring: rgba(13,148,136,.20);
+    --accent-soft: #e0f5f1;
+    --good: #0f9d76;
+    --good-soft: #e3f6ef;
     --warn: #c2410c;
     --warn-soft: #fdeee4;
-    --red: #dc2626;
-    --red-soft: #fdecec;
-    --shadow: 0 1px 2px rgba(16,18,22,.04), 0 8px 24px rgba(16,18,22,.05);
+    --red: #e11d48;
+    --red-soft: #fde7ec;
+    --bar-bg: rgba(255,255,255,.82);
+    --shadow: 0 1px 2px rgba(15,23,42,.05), 0 12px 30px rgba(15,23,42,.07);
   }
   @media (prefers-color-scheme: dark) {
     :root {
-      --bg: #0e0f12;
-      --card: #17191d;
-      --ink: #f0f2f5;
-      --muted: #9aa1ac;
-      --muted-2: #6b7280;
-      --line: #262a30;
-      --line-2: #20242a;
-      --accent: #5b8bff;
-      --accent-soft: #1a2233;
-      --good: #35c98e;
-      --good-soft: #14261f;
-      --warn: #f0925a;
-      --warn-soft: #2a1c14;
-      --red: #f26d6d;
-      --red-soft: #2a1414;
-      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 30px rgba(0,0,0,.35);
+      --bg: #080c14;
+      --card: #111a28;
+      --ink: #e9f0f8;
+      --muted: #93a1b6;
+      --muted-2: #5c6a7f;
+      --line: rgba(255,255,255,.09);
+      --line-2: rgba(255,255,255,.05);
+      --accent: #2dd4bf;
+      --accent-2: #22d3ee;
+      --grad: linear-gradient(135deg, #2dd4bf, #22d3ee);
+      --glow: rgba(45,212,191,.35);
+      --ring: rgba(45,212,191,.28);
+      --accent-soft: rgba(45,212,191,.12);
+      --good: #34d399;
+      --good-soft: rgba(52,211,153,.13);
+      --warn: #fb9a5a;
+      --warn-soft: rgba(251,146,60,.14);
+      --red: #fb7185;
+      --red-soft: rgba(251,113,133,.14);
+      --bar-bg: rgba(10,15,23,.72);
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 36px rgba(0,0,0,.5);
     }
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
-    background: var(--bg);
+    background-color: var(--bg);
+    background-image: radial-gradient(1100px 620px at 50% -12%, var(--accent-soft), transparent 60%);
+    background-attachment: fixed;
     color: var(--ink);
     font: 15px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -69,29 +81,42 @@
 
   /* header */
   .top { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
-  h1 { font-size: 22px; font-weight: 650; margin: 0; letter-spacing: -.01em; }
+  h1 {
+    font-size: 24px; font-weight: 800; margin: 0; letter-spacing: -.03em;
+    background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent;
+  }
   .top .sub { color: var(--muted); font-size: 13px; }
 
   /* tabs */
-  .tabs { display: inline-flex; gap: 4px; background: var(--line-2); border: 1px solid var(--line); padding: 4px; border-radius: 12px; margin-bottom: 22px; }
+  .tabs { display: inline-flex; gap: 4px; background: var(--line-2); border: 1px solid var(--line); padding: 5px; border-radius: 14px; margin-bottom: 22px; }
   .tab {
     border: none; background: transparent; color: var(--muted); cursor: pointer;
-    padding: 8px 16px; border-radius: 9px; font: inherit; font-weight: 550; transition: .12s;
-    display: inline-flex; align-items: center; gap: 7px;
+    padding: 8px 15px; border-radius: 10px; font: inherit; font-weight: 550; transition: .16s;
+    display: inline-flex; align-items: center; gap: 8px;
   }
   .tab:hover { color: var(--ink); }
   .tab.active { background: var(--card); color: var(--ink); box-shadow: var(--shadow); }
-  .tab .pill { font-size: 11px; font-weight: 600; color: var(--muted); }
+  .tab.active .ti { color: var(--accent); }
+  .tab .pill { font-size: 11px; font-weight: 600; color: var(--muted-2); }
   .tab.active .pill { color: var(--accent); }
-  .tab .ti { display: none; } /* иконки — только в мобильной нижней панели */
+  .tab .ti { display: inline-flex; }
+  .tab .ti svg { width: 17px; height: 17px; display: block; }
 
   /* summary */
   .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 24px; }
   .summary.cols3 { grid-template-columns: repeat(3, 1fr); }
-  .stat { background: var(--card); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; box-shadow: var(--shadow); }
+  .stat {
+    background: var(--card); border: 1px solid var(--line); border-radius: 16px;
+    padding: 15px 16px; box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stat::before {
+    content: ""; position: absolute; inset: 0 0 auto 0; height: 2px;
+    background: var(--grad); opacity: 0; transition: .2s;
+  }
+  .stat.accent::before, .stat.good::before { opacity: .9; }
   .stat .k { color: var(--muted); font-size: 12px; margin-bottom: 6px; }
-  .stat .v { font-size: 20px; font-weight: 650; letter-spacing: -.01em; }
-  .stat.accent .v { color: var(--accent); }
+  .stat .v { font-size: 21px; font-weight: 750; letter-spacing: -.02em; }
+  .stat.accent .v { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
   .stat.good .v { color: var(--good); }
   .stat.warn .v { color: var(--warn); }
   .stat.red .v { color: var(--red); }
@@ -105,20 +130,23 @@
   input, button, textarea { font: inherit; }
   input {
     background: var(--bg); border: 1px solid var(--line); color: var(--ink);
-    border-radius: 10px; padding: 9px 12px; outline: none;
+    border-radius: 12px; padding: 10px 13px; outline: none; transition: .15s;
   }
-  input:focus { border-color: var(--accent); }
+  input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px var(--ring); }
   input[type="date"] { color-scheme: light dark; }
   .add input.grow { flex: 1 1 180px; }
   .add input.money { width: 130px; }
 
   .btn {
     border: 1px solid var(--line); background: var(--card); color: var(--ink);
-    border-radius: 10px; padding: 9px 14px; cursor: pointer; transition: .12s;
+    border-radius: 12px; padding: 10px 15px; cursor: pointer; transition: .15s;
   }
   .btn:hover { border-color: var(--muted); }
-  .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 550; }
-  .btn.primary:hover { filter: brightness(1.05); }
+  .btn.primary {
+    background: var(--grad); border: none; color: #04140f; font-weight: 700;
+    box-shadow: 0 6px 18px var(--glow);
+  }
+  .btn.primary:hover { filter: brightness(1.06); box-shadow: 0 8px 24px var(--glow); }
   .btn.ghost { border-color: transparent; background: transparent; color: var(--muted); padding: 6px 8px; }
   .btn.ghost:hover { color: var(--ink); background: var(--line-2); }
   .btn.tiny { padding: 4px 8px; font-size: 12px; }
@@ -235,24 +263,34 @@
     .cactions .btn.danger { color: var(--red); }
     .cactions .btn.armed { color: #fff; }
 
-    /* Нижняя навигация — фиксированная, как таббар в приложении */
+    /* Нижняя навигация — стеклянная, как таббар в приложении */
     .tabs {
       position: fixed; left: 0; right: 0; bottom: 0; z-index: 30;
       display: flex; gap: 0; margin: 0; border-radius: 0;
       border: none; border-top: 1px solid var(--line);
-      padding: 6px 6px calc(6px + env(safe-area-inset-bottom));
-      background: var(--card);
-      box-shadow: 0 -2px 14px rgba(0,0,0,.06);
+      padding: 8px 6px calc(8px + env(safe-area-inset-bottom));
+      background: var(--bar-bg);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+      box-shadow: 0 -6px 24px rgba(0,0,0,.10);
     }
     .tab {
-      flex: 1; flex-direction: column; gap: 3px; padding: 7px 2px;
-      border-radius: 12px; font-size: 11px; font-weight: 600; color: var(--muted-2);
+      position: relative; flex: 1; flex-direction: column; gap: 4px; padding: 6px 2px;
+      border-radius: 12px; font-size: 10.5px; font-weight: 600; color: var(--muted-2);
+      transition: color .15s;
     }
-    .tab .ti { display: block; font-size: 21px; line-height: 1; filter: grayscale(.25); opacity: .85; }
+    .tab .ti { display: block; }
+    .tab .ti svg { width: 25px; height: 25px; }
     .tab .tl { display: block; }
     .tab .pill { display: none; }
     .tab.active { background: transparent; color: var(--accent); box-shadow: none; }
-    .tab.active .ti { filter: none; opacity: 1; }
+    .tab.active .ti { color: var(--accent); }
+    .tab.active .ti svg { filter: drop-shadow(0 0 7px var(--glow)); }
+    .tab.active::before {
+      content: ""; position: absolute; top: -8px; left: 50%; transform: translateX(-50%);
+      width: 28px; height: 3px; border-radius: 3px; background: var(--grad);
+      box-shadow: 0 0 8px var(--glow);
+    }
   }
 </style>
 </head>
@@ -267,10 +305,10 @@
   </div>
 
   <div class="tabs" id="tabs">
-    <button class="tab active" data-tab="clients"><span class="ti" aria-hidden="true">👥</span><span class="tl">Клиенты</span> <span class="pill">доход</span></button>
-    <button class="tab" data-tab="income"><span class="ti" aria-hidden="true">💰</span><span class="tl">Приходы</span> <span class="pill">разовые</span></button>
-    <button class="tab" data-tab="staff"><span class="ti" aria-hidden="true">💼</span><span class="tl">Сотрудники</span> <span class="pill">−</span></button>
-    <button class="tab" data-tab="expenses"><span class="ti" aria-hidden="true">🧾</span><span class="tl">Расходы</span> <span class="pill">−</span></button>
+    <button class="tab active" data-tab="clients"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.1"/><path d="M2.8 19.2a6.2 6.2 0 0 1 12.4 0"/><path d="M16.5 5.3a3 3 0 0 1 0 5.6"/><path d="M17.7 19.2a6.2 6.2 0 0 0-2.4-4.9"/></svg></span><span class="tl">Клиенты</span> <span class="pill">доход</span></button>
+    <button class="tab" data-tab="income"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8.4"/><path d="M12 7.7v8.6"/><path d="M8.6 12.9 12 16.3l3.4-3.4"/></svg></span><span class="tl">Приходы</span> <span class="pill">разовые</span></button>
+    <button class="tab" data-tab="staff"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7.5" width="18" height="12.5" rx="2.4"/><path d="M8.3 7.5V6.2a2.2 2.2 0 0 1 2.2-2.2h3a2.2 2.2 0 0 1 2.2 2.2v1.3"/><path d="M3 12.4h18"/></svg></span><span class="tl">Сотрудники</span> <span class="pill">−</span></button>
+    <button class="tab" data-tab="expenses"><span class="ti" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.6h12v16.8l-2.2-1.4-2.3 1.4-2.3-1.4-2.2 1.4L6 20.4z"/><path d="M9 8h6M9 11.6h6M9 15.2h4"/></svg></span><span class="tl">Расходы</span> <span class="pill">−</span></button>
   </div>
 
   <!-- ===== КЛИЕНТЫ ===== -->
